@@ -53,11 +53,11 @@ public class Main {
         numberOfColumns = Integer.parseInt(args[1]);
         containerRowsNumber = Integer.parseInt(args[2]);
 
-        createParser(args[3]);
+        createParser(args[3], 3);
     }
 
-    private void createParser(String arg) {
-
+    private void createParser(String arg, int argNum) {
+        
     }
 
     private void checkFileParam(String arg, int argNum) {
