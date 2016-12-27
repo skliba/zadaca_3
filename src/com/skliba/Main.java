@@ -57,7 +57,7 @@ public class Main {
     }
 
     private void createParser(String arg, int argNum) {
-        
+         
     }
 
     private void checkFileParam(String arg, int argNum) {
