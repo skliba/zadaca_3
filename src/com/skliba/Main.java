@@ -23,13 +23,22 @@ public class Main {
 
     private static final String RANDOM = "Random";
 
+    private static final int REQUIRED_ARGS_NUMBER = 10;
+
     private String outputFileName;
 
     private Map<String, ArrayList<Dive>> algoritmOutputMap = new HashMap<>();
 
+    private int numberOfRows;
+
+    private int numberOfColumns;
+
+    private int containerRowsNumber;
+
     public static void main(String[] args) {
-        if (args != null && args.length != 0 && args.length == 7) {
+        if (args != null && args.length != 0 && args.length == REQUIRED_ARGS_NUMBER) {
             Main main = new Main();
+            main.checkArguments(args);
             main.checkFileParam(args[1], 1);
             main.checkFileParam(args[2], 2);
             main.checkFileParam(args[6], 6);
@@ -37,6 +46,18 @@ public class Main {
         } else {
             throw new IllegalArgumentException("Invalid number of arguments sent");
         }
+    }
+
+    private void checkArguments(String[] args) {
+        numberOfRows = Integer.parseInt(args[0]);
+        numberOfColumns = Integer.parseInt(args[1]);
+        containerRowsNumber = Integer.parseInt(args[2]);
+
+        createParser(args[3]);
+    }
+
+    private void createParser(String arg) {
+
     }
 
     private void checkFileParam(String arg, int argNum) {
