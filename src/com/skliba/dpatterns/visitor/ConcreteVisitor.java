@@ -1,6 +1,5 @@
 package com.skliba.dpatterns.visitor;
 
-import com.skliba.helpers.ValueComparator;
 import com.skliba.models.DiverDiveInformation;
 import com.skliba.dpatterns.observer.Agency;
 
@@ -51,11 +50,6 @@ public class ConcreteVisitor implements Visitor {
         avgRanking = totalRanking / agency.getDiverInAgency().size();
 
         agencyRankingsMap.put(agency.getName(), avgRanking);
-    }
-
-    public void sortRankingsMap() {
-        sortedMap = new TreeMap<>(new ValueComparator(agencyRankingsMap));
-        sortedMap.putAll(agencyRankingsMap);
     }
 
 }

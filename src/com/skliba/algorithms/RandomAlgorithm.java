@@ -1,5 +1,6 @@
 package com.skliba.algorithms;
 
+import com.skliba.dpatterns.singleton.Dive;
 import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.dpatterns.visitor.Diver;
 import com.skliba.helpers.ReportHelper;
@@ -22,7 +23,6 @@ public class RandomAlgorithm implements Algorithm {
     @Override
     public ArrayList<Dive> setupAlgorithm() {
         initalizeParams();
-        calculateSecurityMeasures();
         return allDivings;
     }
 
@@ -91,7 +91,7 @@ public class RandomAlgorithm implements Algorithm {
         ArrayList<Triplet> triplets = new ArrayList<>();
         allDiversInADive = new ArrayList<>();
         ArrayList<Diver> divers = (ArrayList<Diver>) givenDivers.clone();
-        Dive diveWithDivers = new Dive();
+        Dive diveWithDivers = Dive.getInstance();
         int random = seed * new Random().nextInt(100);
         Collections.shuffle(givenDivers, new Random(seed * random));
 
@@ -142,9 +142,5 @@ public class RandomAlgorithm implements Algorithm {
         return pairs;
     }
 
-    private void calculateSecurityMeasures() {
-        for (Dive dive : allDivings) {
-            dive.calculateOverallSecurityMeasure();
-        }
-    }
+
 }

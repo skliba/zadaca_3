@@ -15,6 +15,7 @@ public class Diver implements Visitable {
     private int yearOfBirth;
     private String agencyName;
     private int maxDepth = 0;
+    private ArrayList<String> specialty = new ArrayList<>();
 
     private static final String SSI = "SSI";
     private static final String CMAS = "CMAS";
@@ -368,6 +369,14 @@ public class Diver implements Visitable {
             diverDiveInformation = new ArrayList<>();
             diverDiveInformation.add(information);
         }
+    }
+
+    public ArrayList<String> getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty.add(specialty);
     }
 
     public int getCeritificateTypeAsInteger() {

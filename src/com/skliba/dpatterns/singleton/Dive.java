@@ -1,4 +1,4 @@
-package com.skliba.models;
+package com.skliba.dpatterns.singleton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -6,20 +6,32 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.models.Pair;
+import com.skliba.models.Triplet;
 
 public class Dive {
 
+    private static Dive instance;
     private ArrayList<Pair> pairs = new ArrayList<>();
     private ArrayList<Triplet> triplets = new ArrayList<>();
     private Date diveDate;
     private Date diveTime;
     private int diveDepth;
-    private float securityMeasure;
-    private float randomSecurityMeasure;
-    private float maxDepthSecurityMeasure;
-    private float maxPartnerSecurityMeasure;
     private ArrayList<Diver> allDiversTogether = new ArrayList<>();
+    private int waterTemperature;
+    private boolean isNightDive;
+    private int numberOfRecorders;
 
+    private Dive() {
+    }
+
+    public static Dive getInstance() {
+        if (instance == null) {
+            instance = new Dive();
+            return instance;
+        }
+        return instance;
+    }
 
     public ArrayList<Pair> getPairs() {
         return pairs;
@@ -42,33 +54,6 @@ public class Dive {
         return sdf.format(diveDate);
     }
 
-    public float getSecurityMeasure() {
-        return securityMeasure;
-    }
-
-    public float getRandomSecurityMeasure() {
-        return randomSecurityMeasure;
-    }
-
-    public void setRandomSecurityMeasure(float randomSecurityMeasure) {
-        this.randomSecurityMeasure = randomSecurityMeasure;
-    }
-
-    public float getMaxDepthSecurityMeasure() {
-        return maxDepthSecurityMeasure;
-    }
-
-    public void setMaxDepthSecurityMeasure(float maxDepthSecurityMeasure) {
-        this.maxDepthSecurityMeasure = maxDepthSecurityMeasure;
-    }
-
-    public float getMaxPartnerSecurityMeasure() {
-        return maxPartnerSecurityMeasure;
-    }
-
-    public void setMaxPartnerSecurityMeasure(float maxPartnerSecurityMeasure) {
-        this.maxPartnerSecurityMeasure = maxPartnerSecurityMeasure;
-    }
 
     public Date getDiveDate() {
         return diveDate;
@@ -102,36 +87,6 @@ public class Dive {
         this.diveDepth = diveDepth;
     }
 
-    public void calculateOverallSecurityMeasure() {
-        for (Pair pair : pairs) {
-            securityMeasure += calculateSecurityMeasureOfAPair(pair);
-        }
-        for (Triplet triplet : triplets) {
-            securityMeasure += calculateSecurityMeasureOfATriplet(triplet);
-        }
-    }
-
-    private float calculateSecurityMeasureOfAPair(Pair pair) {
-        int maxDepth = calculateMaxDepthOfPair(pair);
-        Diver firstDiver = (Diver) pair.getFirstDiver();
-        Diver secondDiver = (Diver) pair.getSecondDiver();
-        float categoryDifference = Math.abs(firstDiver.getCeritificateTypeAsInteger() - secondDiver
-                .getCeritificateTypeAsInteger()) + 1f;
-        return maxDepth / categoryDifference;
-    }
-
-    private float calculateSecurityMeasureOfATriplet(Triplet triplet) {
-        int maxDepth = calculateMaxDepthOfTriplet(triplet);
-        Diver firstDiver = (Diver) triplet.getFirstDiver();
-        Diver secondDiver = (Diver) triplet.getSecondDiver();
-        Diver thirdDiver = (Diver) triplet.getThirdDiver();
-        int maxCertificate = findMaximumCertificate(firstDiver.getCeritificateTypeAsInteger(), secondDiver
-                .getCeritificateTypeAsInteger(), thirdDiver.getCeritificateTypeAsInteger());
-        int minCertificate = findMinimumCertificate(firstDiver.getCeritificateTypeAsInteger(), secondDiver
-                .getCeritificateTypeAsInteger(), thirdDiver.getCeritificateTypeAsInteger());
-        float categoryDifference = maxCertificate - minCertificate + 1f;
-        return maxDepth / categoryDifference;
-    }
 
     private int findMaximumCertificate(int... values) {
         int max = Integer.MIN_VALUE;
@@ -190,5 +145,15 @@ public class Dive {
         } else {
             return getDiveDepth();
         }
+    }
+
+    public void setDiveParams(int diveDepth, int waterTemperature, int nightTime, int numberOfRecorders) {
+        if (diveDepth >= 5 && diveDepth <= 40) this.diveDepth = diveDepth;
+        if (waterTemperature >= 0 && waterTemperature <= 35) this.waterTemperature = waterTemperature;
+        if (nightTime == 0 || nightTime == 1) {
+            if (nightTime == 0) this.isNightDive = false;
+            if (nightTime == 1) this.isNightDive = true;
+        }
+        this.numberOfRecorders = numberOfRecorders;
     }
 }

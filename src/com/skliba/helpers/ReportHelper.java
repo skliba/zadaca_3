@@ -2,6 +2,7 @@ package com.skliba.helpers;
 
 import com.skliba.dpatterns.factory.AlgorithmFactory;
 import com.skliba.dpatterns.observer.Agency;
+import com.skliba.dpatterns.singleton.Dive;
 import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.dpatterns.visitor.ConcreteVisitor;
 import com.skliba.dpatterns.visitor.Diver;
@@ -182,47 +183,4 @@ public class ReportHelper {
         return maxDepth;
     }
 
-    public static ArrayList<Dive> findDivesWithSmallestSecurityMeasure(Map<String, ArrayList<Dive>> algorithmResultsMap) {
-        DiveComparator diveComparator = new DiveComparator();
-        ArrayList<Dive> outputList = new ArrayList<>();
-        ArrayList<Dive> allAlgorithmDive = new ArrayList<>();
-        for (int i = 0; i < DivingClub.getInstance().getDivings().size(); i++) {
-            Dive randomDive = algorithmResultsMap.get(AlgorithmFactory.RANDOM).get(i);
-            Dive maxPartnerDive = algorithmResultsMap.get(AlgorithmFactory.MAX_PARTNER).get(i);
-            Dive maxDepthDive = algorithmResultsMap.get(AlgorithmFactory.MAX_DEPTH).get(i);
-
-            allAlgorithmDive.add(randomDive);
-            allAlgorithmDive.add(maxPartnerDive);
-            allAlgorithmDive.add(maxDepthDive);
-
-            Collections.sort(allAlgorithmDive, diveComparator);
-
-            Dive smallestSecurityMeasureDive = allAlgorithmDive.get(0);
-
-            //Set all security measures for the output
-            smallestSecurityMeasureDive.setRandomSecurityMeasure(randomDive.getSecurityMeasure());
-            smallestSecurityMeasureDive.setMaxDepthSecurityMeasure(maxDepthDive.getSecurityMeasure());
-            smallestSecurityMeasureDive.setMaxPartnerSecurityMeasure(maxPartnerDive.getSecurityMeasure());
-
-            outputList.add(smallestSecurityMeasureDive);
-            DivingClub.getInstance().notifyObservers(smallestSecurityMeasureDive);
-            allAlgorithmDive.clear();
-        }
-        ConcreteVisitor concreteVisitor = DivingClub.getInstance().getConcreteVisitor();
-        for (Dive dive : outputList) {
-            for (Diver diver : dive.getAllDiversTogether()) {
-                diver.accept(concreteVisitor);
-            }
-        }
-
-        for (com.skliba.dpatterns.observer.Observer o : DivingClub.getInstance().getObservers()) {
-            if (o instanceof Agency) {
-                concreteVisitor.visitAgency((Agency) o);
-            }
-        }
-
-        concreteVisitor.sortRankingsMap();
-
-        return outputList;
-    }
 }

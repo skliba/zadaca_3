@@ -4,7 +4,6 @@ import com.skliba.dpatterns.observer.Agency;
 import com.skliba.dpatterns.observer.Observer;
 import com.skliba.dpatterns.visitor.ConcreteVisitor;
 import com.skliba.dpatterns.visitor.Diver;
-import com.skliba.models.Dive;
 import com.skliba.models.Divings;
 import com.skliba.dpatterns.observer.Institution;
 

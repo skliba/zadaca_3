@@ -1,5 +1,6 @@
 package com.skliba.algorithms;
 
+import com.skliba.dpatterns.singleton.Dive;
 import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.dpatterns.visitor.Diver;
 import com.skliba.helpers.ReportHelper;
@@ -21,7 +22,6 @@ public class MaxDepthAlgorithm implements Algorithm {
         createCertificateNameMap();
         makePairsAndTriplets();
         addDiversInformation();
-        calculateSecurityMeasures();
         return outputDiveList;
     }
 
@@ -88,7 +88,7 @@ public class MaxDepthAlgorithm implements Algorithm {
 
     private void makePairsAndTriplets() {
         for (Divings diving : initialDivingsList) {
-            Dive dive = new Dive();
+            Dive dive = Dive.getInstance();
             dive.setDiveDepth(diving.getDiveDepth());
             List<Diver> allDiversInADive = dive.getAllDiversTogether();
             dive.setDiveDate(diving.getDiveDate());
@@ -247,12 +247,6 @@ public class MaxDepthAlgorithm implements Algorithm {
             if (i == DivingClub.getInstance().getCertificateList().size() - 1) {
                 i = 0;
             }
-        }
-    }
-
-    private void calculateSecurityMeasures() {
-        for (Dive dive : outputDiveList) {
-            dive.calculateOverallSecurityMeasure();
         }
     }
 }

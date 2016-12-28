@@ -1,6 +1,6 @@
 package com.skliba.algorithms;
 
-import com.skliba.models.Dive;
+import com.skliba.dpatterns.singleton.Dive;
 
 import java.util.ArrayList;
 

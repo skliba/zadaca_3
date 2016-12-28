@@ -1,7 +1,7 @@
 package com.skliba.algorithms;
 
 import com.skliba.helpers.ReportHelper;
-import com.skliba.models.Dive;
+import com.skliba.dpatterns.singleton.Dive;
 import com.skliba.dpatterns.visitor.Diver;
 import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.models.Divings;
@@ -24,7 +24,7 @@ public class MaxPartnerAlgorithm implements Algorithm {
         createCertificateNameMap();
         makePairsAndTriplets();
         addDiversInformation();
-        calculateSecurityMeasures();
+
         return (ArrayList<Dive>) outputDiveList;
     }
 
@@ -84,7 +84,7 @@ public class MaxPartnerAlgorithm implements Algorithm {
 
     private void makePairsAndTriplets() {
         for (Divings diving : initialDivingList) {
-            Dive dive = new Dive();
+            Dive dive = Dive.getInstance();
             dive.setDiveDepth(diving.getDiveDepth());
             List<Diver> allDiversInADive = dive.getAllDiversTogether();
             dive.setDiveDate(diving.getDiveDate());
@@ -199,9 +199,4 @@ public class MaxPartnerAlgorithm implements Algorithm {
         return triplet;
     }
 
-    private void calculateSecurityMeasures() {
-        for (Dive dive: outputDiveList) {
-            dive.calculateOverallSecurityMeasure();
-        }
-    }
 }

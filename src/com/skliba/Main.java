@@ -3,11 +3,13 @@ package com.skliba;
 import com.skliba.algorithms.Algorithm;
 import com.skliba.dpatterns.factory.AlgorithmFactory;
 import com.skliba.dpatterns.factory.AlgorithmInjector;
-import com.skliba.helpers.FileUtil;
-import com.skliba.helpers.ReportHelper;
-import com.skliba.models.*;
+import com.skliba.parsers.Parser;
+import com.skliba.dpatterns.singleton.Dive;
+import com.skliba.dpatterns.singleton.TerminalData;
+import com.skliba.parsers.DiversParser;
+import com.skliba.parsers.GearParser;
+import com.skliba.parsers.SpecialitesParser;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,48 +41,37 @@ public class Main {
         if (args != null && args.length != 0 && args.length == REQUIRED_ARGS_NUMBER) {
             Main main = new Main();
             main.checkArguments(args);
-            main.checkFileParam(args[1], 1);
-            main.checkFileParam(args[2], 2);
-            main.checkFileParam(args[6], 6);
-            main.checkAlgorithms(args[3], args[0], args[4], args[5]);
         } else {
-            throw new IllegalArgumentException("Invalid number of arguments sent");
+            throw new IllegalArgumentException("Invalid number of arguments sent you've sent: " + args.length);
         }
     }
 
     private void checkArguments(String[] args) {
-        numberOfRows = Integer.parseInt(args[0]);
-        numberOfColumns = Integer.parseInt(args[1]);
-        containerRowsNumber = Integer.parseInt(args[2]);
+        TerminalData.getInstance().setData(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+        Dive.getInstance().setDiveParams(Integer.parseInt(args[6]), Integer.parseInt(args[7]),
+                Integer.parseInt(args[8]), Integer.parseInt(args[9]));
 
         createParser(args[3], 3);
+        createParser(args[4], 4);
+        createParser(args[5], 5);
     }
 
     private void createParser(String arg, int argNum) {
-        
-    }
-
-    private void checkFileParam(String arg, int argNum) {
         Pattern p = Pattern.compile(FILE_REGEX);
 
         if (p.matcher(arg).matches()) {
             switch (argNum) {
-                case 1:
-                    File inputFile = new File(arg);
-                    if (inputFile.exists()) {
-                        FileUtil.readFileAndAddDivers(inputFile);
-                    }
+                case 3:
+                    Parser diversParser = new DiversParser();
+                    diversParser.readFile(arg);
                     break;
-                case 2:
-                    File divesFile = new File(arg);
-                    if (divesFile.exists()) {
-                        FileUtil.readFileAndAddDates(divesFile);
-                    }
+                case 4:
+                    Parser specialitiesParser = new SpecialitesParser();
+                    specialitiesParser.readFile(arg);
                     break;
-                case 6:
-                    outputFileName = arg;
-                    break;
-                default:
+                case 5:
+                    Parser gearParser = new GearParser();
+                    gearParser.readFile(arg);
                     break;
             }
         } else {
@@ -114,7 +105,6 @@ public class Main {
             activateAlgorithm(algorithm3, seed);
         }
 
-        writeReport(ReportHelper.findDivesWithSmallestSecurityMeasure(algoritmOutputMap));
     }
 
     private void activateAlgorithm(String algName, String seed) {
@@ -122,10 +112,5 @@ public class Main {
         AlgorithmInjector injector = new AlgorithmFactory();
         Algorithm algorithm = injector.inject(algName, seedInt);
         algoritmOutputMap.put(algName, algorithm.setupAlgorithm());
-
-    }
-
-    private void writeReport(ArrayList<Dive> dives) {
-        FileUtil.writeReport(outputFileName, dives);
     }
 }
