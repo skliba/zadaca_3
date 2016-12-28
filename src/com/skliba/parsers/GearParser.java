@@ -24,10 +24,14 @@ public class GearParser extends Parser {
 
         if (gearData.length == SMALL_DATA_PER_ROW) {
             ItemGroup ig = new ItemGroup(gearData[0], gearData[1]);
-            ItemGroup lastInsertedItemGroup = InventoryData.getInstance().getItemGroup(InventoryData.getInstance().getItemGroups().size() - 1);
+            if (InventoryData.getInstance().getItemGroups().size() < 0) {
+                ItemGroup lastInsertedItemGroup = InventoryData.getInstance().getItemGroup(InventoryData.getInstance().getItemGroups().size() - 1);
 
-            if (ig.getCode().contains(lastInsertedItemGroup.getCode())) {
-                lastInsertedItemGroup.addItem(ig);
+                if (lastInsertedItemGroup != null && ig.getCode().contains(lastInsertedItemGroup.getCode())) {
+                    lastInsertedItemGroup.addItem(ig);
+                } else {
+                    InventoryData.getInstance().addItemGroup(ig);
+                }
             } else {
                 InventoryData.getInstance().addItemGroup(ig);
             }
@@ -39,8 +43,16 @@ public class GearParser extends Parser {
             ArrayList<ItemGroup> itemGroups = InventoryData.getInstance().getItemGroups();
 
             for (ItemGroup ig : itemGroups) {
+
                 if (item.getCode().contains(ig.getCode())) {
-                    ig.addItem(item);
+
+                    for (int i = ig.getComponents().size() - 1; i >= 0; i--) {
+
+                        if (i >= 0 && ig.getComponents().get(i) instanceof ItemGroup
+                                && item.getCode().contains(((ItemGroup) ig.getComponents().get(i)).getCode())) {
+                            ig.addItem(item);
+                        }
+                    }
                 }
             }
         }
@@ -48,6 +60,6 @@ public class GearParser extends Parser {
 
     @Override
     void parseComplete() {
-
+        System.out.println("Im done");
     }
 }

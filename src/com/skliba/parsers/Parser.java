@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public abstract class Parser {
 
-    protected void readFile(String filename) {
+    public void readFile(String filename) {
         BufferedReader bufferedReader;
 
         try {

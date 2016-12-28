@@ -1,0 +1,67 @@
+0;Sustav opreme za ronjenje na dah
+0.1;Maska;#;#;#;#;#;20
+0.2;Disalica;#;#;#;#;#;20
+0.3;Peraje;#;#;#;#;#;20
+1;Sustav zaštitnog ronilačkog odijela
+1.1;Zaštitno odijelo
+1.1.1;Mokro odijelo
+1.1.1.1;Mokro kratko odijelo debljine 3mm;25;-;#;#;#;2
+1.1.1.2;Mokro odijelo debljine 3mm;21;-;#;#;#;2
+1.1.1.3;Mokro odijelo debljine 5mm;16;+;#;#;#;10
+1.1.1.4;Mokro odijelo debljine 7mm;10;+;#;#;#;5
+1.1.2;Polu suho odijelo
+1.1.2.1;Polu suho odijelo;10;-;#;#;#;2
+1.1.3;Suho odijelo
+1.1.3.1;;Suho odijelo neopren
+1.1.3.1.1;Suho odijelo neopren debljine 3mm;20;-;+;#;#;2
+1.1.3.1.2;Suho odijelo neopren debljine 5mm;18;-;+;#;#;7
+1.1.3.1.3;Suho odijelo neopren debljine 7mm;15;-;+;#;#;3
+1.1.3.2;Suho odijelo trilaminat
+1.1.3.2.1;Suho odijelo trilaminat;20;-;+;#;#;5
+1.2;Pododijelo za suho odijelo
+1.2.1;Pododijelo za suho odijelo 100gr;10;#;*;#;#;2
+1.2.2;Pododijelo za suho odijelo 290gr;5;#;*;#;#;10
+1.2.3;Pododijelo za suho odijelo 490gr;0;#;*;#;#;2
+1.2.4;Pododijelo s grijanjem za suho odijelo 400gr;0;#;*;#;#;1
+1.3;Rukavice
+1.3.1;Rukavice debljine 2,5mm;20;#;#;#;#;2
+1.3.2;Rukavice debljine 3,5mm;15;#;#;#;#;5
+1.3.3;Rukavice debljine 5mm;10;#;#;#;#;5
+1.3.4;Rukavice s 3 prsta debljine 5mm;2;#;#;#;#;4
+1.3.5;Rukavice s grijanjem debljine 5mm;0;#;#;#;#;1
+1.4;Kapuljača
+1.4.1;Kapuljača debljine 5mm;5;*;#;#;#;6
+1.4.2;Kapuljača debljine 7mm;0;*;#;#;#;6
+1.5;Čizme
+1.5.1;Čizme debljine 5mm;15;#;#;#;#;6
+1.5.2;Čizme debljine 7mm;5;#;#;#;#;6
+2;Sustav za opskrbu zrakom
+2.1;Regulator
+2.1.1;Regulator s mokrom komorom;5;#;#;#;#;4
+2.1.2;Regulator sa suhom komorom;0;#;#;#;#;6
+2.2;Boca za ronjenje
+2.2.1;Boca za ronjenje 12l;#;#;#;#;#;4
+2.2.2;Boca za ronjenje 15l;#;#;#;#;#;8
+2.2.3;Boca za ronjenje 18l;#;#;#;#;#;4
+3;Sustav za kontrolu plovnosti
+3.1;Kompentator plovnosti
+3.1.1;Kompentator plovnosti klasični;#;#;#;#;#;6
+3.1.2;Kompentator plovnosti s krilima;#;#;#;#;#;4
+3.2;;Pojas s olovom
+3.2;1;Pojas s olovom;#;#;#;#;#;2
+4;Sustav ronilačkih instrumenata
+4.1;Ronilačko računalo;#;#;#;*;#;6
+4.2;;Ronilački kompas;#;#;#;#;#;4
+5;Sustav dodatne opreme
+5.1;Ronilačka svjetiljka;#;#;#;*;#;8
+5.2;Ronilački nož;#;#;#;#;#;6
+5.3;Ronilačka bova;#;#;#;#;#;3
+6;Sustav podvodnog snimanje
+6.1;Foto-video aparat
+6.1.1;GoPro s kućištem;#;#;#;#;*;2
+6.1.2;Kompaktni fotoaparat s kućištem;#;#;#;#;*;1
+6.1.3;DSRL fotoaparat s kućištem;#;#;#;#;*;1
+6.2;Podvodni rasvjeta
+6.2;1;Podvodna rasvjeta s 1 blicom;#;#;#;#;*;1
+6.2;2;Podvodna rasvjeta s 2 blica;#;#;#;#;*;1
+6.2;3;Podvodna video svjetiljka;#;#;#;#;*;2

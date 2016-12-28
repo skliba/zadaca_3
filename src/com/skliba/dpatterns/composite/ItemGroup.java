@@ -47,4 +47,8 @@ public class ItemGroup extends InventoryComponent {
         }
         return "";
     }
+
+    public ArrayList<InventoryComponent> getComponents() {
+        return components;
+    }
 }
