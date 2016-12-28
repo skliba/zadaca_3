@@ -6,6 +6,7 @@ import com.skliba.dpatterns.composite.ItemGroup;
 import com.skliba.dpatterns.singleton.InventoryData;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GearParser extends Parser {
 
@@ -25,14 +26,12 @@ public class GearParser extends Parser {
 
         if (gearData.length == SMALL_DATA_PER_ROW) {
             ItemGroup ig = new ItemGroup(gearData[0], gearData[1]);
-            if (InventoryData.getInstance().getItemGroups().size() > 0) {
-                ItemGroup lastInsertedItemGroup = InventoryData.getInstance().getItemGroup(InventoryData.getInstance().getItemGroups().size() - 1);
 
-                if (lastInsertedItemGroup != null && ig.getCode().contains(lastInsertedItemGroup.getCode())) {
-                    lastInsertedItemGroup.addItem(ig);
-                } else {
-                    InventoryData.getInstance().addItemGroup(ig);
-                }
+            if (InventoryData.getInstance().getItemGroups().size() > 0 &&
+                    ig.getCode().contains(InventoryData.getInstance().getItemGroup(
+                            InventoryData.getInstance().getItemGroups().size() - 1).getCode())) {
+
+                goItemGroupDeep(ig, InventoryData.getInstance().getItemGroups().get(InventoryData.getInstance().getItemGroups().size() - 1));
             } else {
                 InventoryData.getInstance().addItemGroup(ig);
             }
@@ -50,6 +49,25 @@ public class GearParser extends Parser {
             }
         }
     }
+
+    private void goItemGroupDeep(ItemGroup currentItemGroup, ItemGroup parentItemGroup) {
+        if (parentItemGroup.getComponents().isEmpty()) {
+            parentItemGroup.addItem(currentItemGroup);
+            return;
+        }
+
+        ArrayList<InventoryComponent> arr = (ArrayList<InventoryComponent>) parentItemGroup.getComponents().clone();
+
+        for (InventoryComponent inventoryComponent : arr)
+            if (currentItemGroup.getCode().contains(inventoryComponent.getCode()) && ((ItemGroup)inventoryComponent).getComponents().isEmpty()) {
+
+                goItemGroupDeep(currentItemGroup, (ItemGroup) inventoryComponent);
+            } else {
+                parentItemGroup.addItem(currentItemGroup);
+                return;
+            }
+    }
+
 
     private void goDeep(ItemGroup ig, ArrayList<InventoryComponent> components, Item currentItem) {
         if (components.isEmpty()) {

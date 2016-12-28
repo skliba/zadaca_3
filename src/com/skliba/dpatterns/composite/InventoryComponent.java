@@ -2,7 +2,7 @@ package com.skliba.dpatterns.composite;
 
 public abstract class InventoryComponent {
 
-    protected String getCode() {
+    public String getCode() {
         throw new UnsupportedOperationException();
     }
 
