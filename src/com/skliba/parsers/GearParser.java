@@ -58,14 +58,25 @@ public class GearParser extends Parser {
 
         ArrayList<InventoryComponent> arr = (ArrayList<InventoryComponent>) parentItemGroup.getComponents().clone();
 
-        for (InventoryComponent inventoryComponent : arr)
-            if (currentItemGroup.getCode().startsWith(inventoryComponent.getCode()) && ((ItemGroup)inventoryComponent).getComponents().isEmpty()) {
+        for (InventoryComponent inventoryComponent : arr) {
+            if (currentItemGroup.getCode().startsWith(inventoryComponent.getCode())) {
 
                 goItemGroupDeep(currentItemGroup, (ItemGroup) inventoryComponent);
             } else {
-                parentItemGroup.addItem(currentItemGroup);
+                findRightParent(currentItemGroup, arr, parentItemGroup);
                 return;
             }
+        }
+    }
+
+    private void findRightParent(ItemGroup currentItemGroup, ArrayList<InventoryComponent> arr, ItemGroup parentItemGroup) {
+        for (int i = 0; i < arr.size(); i++) {
+            if (currentItemGroup.getCode().startsWith(arr.get(i).getCode())) {
+                arr.get(i).addItem(currentItemGroup);
+                return;
+            }
+        }
+        parentItemGroup.addItem(currentItemGroup);
     }
 
 

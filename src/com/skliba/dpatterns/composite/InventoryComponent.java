@@ -34,7 +34,7 @@ public abstract class InventoryComponent {
         throw new UnsupportedOperationException();
     }
 
-    protected void addItem(InventoryComponent item) {
+    public void addItem(InventoryComponent item) {
         throw new UnsupportedOperationException();
     }
 
