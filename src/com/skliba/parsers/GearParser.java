@@ -28,7 +28,7 @@ public class GearParser extends Parser {
             ItemGroup ig = new ItemGroup(gearData[0], gearData[1]);
 
             if (InventoryData.getInstance().getItemGroups().size() > 0 &&
-                    ig.getCode().contains(InventoryData.getInstance().getItemGroup(
+                    ig.getCode().startsWith(InventoryData.getInstance().getItemGroup(
                             InventoryData.getInstance().getItemGroups().size() - 1).getCode())) {
 
                 goItemGroupDeep(ig, InventoryData.getInstance().getItemGroups().get(InventoryData.getInstance().getItemGroups().size() - 1));
@@ -43,7 +43,7 @@ public class GearParser extends Parser {
             ArrayList<ItemGroup> itemGroups = InventoryData.getInstance().getItemGroups();
 
             for (ItemGroup ig : itemGroups) {
-                if (item.getCode().contains(ig.getCode())) {
+                if (item.getCode().startsWith(ig.getCode())) {
                     goDeep(ig, ig.getComponents(), item);
                 }
             }
@@ -59,7 +59,7 @@ public class GearParser extends Parser {
         ArrayList<InventoryComponent> arr = (ArrayList<InventoryComponent>) parentItemGroup.getComponents().clone();
 
         for (InventoryComponent inventoryComponent : arr)
-            if (currentItemGroup.getCode().contains(inventoryComponent.getCode()) && ((ItemGroup)inventoryComponent).getComponents().isEmpty()) {
+            if (currentItemGroup.getCode().startsWith(inventoryComponent.getCode()) && ((ItemGroup)inventoryComponent).getComponents().isEmpty()) {
 
                 goItemGroupDeep(currentItemGroup, (ItemGroup) inventoryComponent);
             } else {
