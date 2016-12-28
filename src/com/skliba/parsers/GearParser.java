@@ -1,5 +1,6 @@
 package com.skliba.parsers;
 
+import com.skliba.dpatterns.composite.InventoryComponent;
 import com.skliba.dpatterns.composite.Item;
 import com.skliba.dpatterns.composite.ItemGroup;
 import com.skliba.dpatterns.singleton.InventoryData;
@@ -43,19 +44,24 @@ public class GearParser extends Parser {
             ArrayList<ItemGroup> itemGroups = InventoryData.getInstance().getItemGroups();
 
             for (ItemGroup ig : itemGroups) {
-
-                if (item.getCode().contains(ig.getCode()) && !ig.getComponents().isEmpty()) {
-
-                    for (int i = ig.getComponents().size() - 1; i >= 0; i--) {
-
-                        if (ig.getComponents().get(i) instanceof ItemGroup
-                                && item.getCode().contains(((ItemGroup) ig.getComponents().get(i)).getCode())) {
-                            ig.addItem(item);
-                        }
-                    }
-                } else {
-                    ig.addItem(item);
+                if (item.getCode().contains(ig.getCode())) {
+                    goDeep(ig, ig.getComponents(), item);
                 }
+            }
+        }
+    }
+
+    private void goDeep(ItemGroup ig, ArrayList<InventoryComponent> components, Item currentItem) {
+        if (components.isEmpty()) {
+            components.add(currentItem);
+            return;
+        }
+        for (InventoryComponent inventoryComponent : components) {
+            if (inventoryComponent instanceof Item) {
+                ig.addItem(currentItem);
+                return;
+            } else {
+                goDeep((ItemGroup) inventoryComponent, ((ItemGroup) inventoryComponent).getComponents(), currentItem);
             }
         }
     }
