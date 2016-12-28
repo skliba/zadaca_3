@@ -86,7 +86,7 @@ public class GearParser extends Parser {
             return;
         }
         for (InventoryComponent inventoryComponent : components) {
-            if (inventoryComponent instanceof Item) {
+            if (currentItem.getCode().startsWith(inventoryComponent.getCode())) {
                 ig.addItem(currentItem);
                 return;
             } else {
