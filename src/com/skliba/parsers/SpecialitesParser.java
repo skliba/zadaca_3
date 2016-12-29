@@ -1,5 +1,6 @@
 package com.skliba.parsers;
 
+import com.skliba.SpecialDivingSkill;
 import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.dpatterns.visitor.Diver;
 
@@ -23,7 +24,7 @@ public class SpecialitesParser extends Parser {
 
         for (Diver diver : divers) {
             if (diver.getName().equals(specialties[0])) {
-                diver.setSpecialty(specialties[1]);
+                diver.addSpecificDivingSkill(SpecialDivingSkill.getFromString(specialties[1]));
             }
         }
     }

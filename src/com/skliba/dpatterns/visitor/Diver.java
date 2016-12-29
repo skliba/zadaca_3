@@ -1,9 +1,9 @@
 package com.skliba.dpatterns.visitor;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import com.skliba.dpatterns.visitor.Visitable;
-import com.skliba.dpatterns.visitor.Visitor;
+import com.skliba.SpecialDivingSkill;
 import com.skliba.models.DiverDiveInformation;
 
 public class Diver implements Visitable {
@@ -15,7 +15,7 @@ public class Diver implements Visitable {
     private int yearOfBirth;
     private String agencyName;
     private int maxDepth = 0;
-    private ArrayList<String> specialty = new ArrayList<>();
+    private List<SpecialDivingSkill> specialDivingSkills = new ArrayList<>();
 
     private static final String SSI = "SSI";
     private static final String CMAS = "CMAS";
@@ -371,12 +371,12 @@ public class Diver implements Visitable {
         }
     }
 
-    public ArrayList<String> getSpecialty() {
-        return specialty;
+    public List<SpecialDivingSkill> getSpecialDivingSkills() {
+        return specialDivingSkills;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty.add(specialty);
+    public void addSpecificDivingSkill(SpecialDivingSkill specificDivingSkill) {
+        this.specialDivingSkills.add(specificDivingSkill);
     }
 
     public int getCeritificateTypeAsInteger() {
@@ -390,5 +390,17 @@ public class Diver implements Visitable {
     @Override
     public void accept(Visitor visitor) {
         visitor.visitDiver(this);
+    }
+
+    public boolean canUseDrySuit() {
+        return specialDivingSkills.contains(SpecialDivingSkill.DRY_SUIT);
+    }
+
+    public boolean canPerformNightDive() {
+        return specialDivingSkills.contains(SpecialDivingSkill.NIGHT_DIVE);
+    }
+
+    public boolean isUnderWaterPhotograph() {
+        return specialDivingSkills.contains(SpecialDivingSkill.UNDERWATER_PHOTOGRAPH);
     }
 }
