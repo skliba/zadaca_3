@@ -1,5 +1,7 @@
 package com.skliba.helpers;
 
+import com.skliba.dpatterns.memento.TerminalCaretaker;
+import com.skliba.dpatterns.memento.TerminalOriginator;
 import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.dpatterns.singleton.TerminalData;
 import com.skliba.dpatterns.visitor.Diver;
@@ -32,6 +34,12 @@ public class TerminalHelper {
     private static ArrayList<Diver> initialDiverList = new ArrayList<>();
 
     private static int movedUpSpaces = 0;
+
+    private static TerminalCaretaker terminalCaretaker = new TerminalCaretaker();
+
+    private static TerminalOriginator terminalOriginator = new TerminalOriginator();
+
+    private static int numOfSavedStates = 0;
 
     public static void init() {
         numberOfRows = TerminalData.getInstance().getNumberOfRows();
@@ -75,6 +83,10 @@ public class TerminalHelper {
                 e.printStackTrace();
             }
         }
+
+        terminalOriginator.setState(clonedDiverList);
+        terminalCaretaker.addMemento(terminalOriginator.saveToMemento());
+        numOfSavedStates++;
         addCommandLine();
         initTerminal();
     }
@@ -94,7 +106,7 @@ public class TerminalHelper {
             } else if (command.equals("P")) {
                 printDroppedDivers();
             } else if (command.equals("V")) {
-                break;
+                printInitialListState();
             } else if (command.equals("G")) {
 
                 if (initialDiverList.size() > numberOfTerminalRows) moveScreenUp(initialDiverList, currentlyVisibleDivers);
@@ -121,6 +133,38 @@ public class TerminalHelper {
         }
     }
 
+    private static void printInitialListState() {
+        terminalOriginator.restoreFromMemento(terminalCaretaker.getMemento(numOfSavedStates - 1));
+        ArrayList<Diver> restoredDivers = terminalOriginator.getDiversSavedState();
+        System.out.print(ANSI_ESC + "2J");
+
+        currentlyVisibleDivers.clear();
+
+        for (int i = 0; i < restoredDivers.size(); i++) {
+
+            currentlyVisibleDivers.add(restoredDivers.get(i));
+
+            if (i == numberOfTerminalRows) {
+                System.out.print(ANSI_ESC + (numberOfTerminalRows - i) + ";1f");
+                System.out.print(restoredDivers.get(i).getName());
+                break;
+            } else {
+                System.out.print(ANSI_ESC + (numberOfTerminalRows - i) + ";1f");
+                System.out.print(restoredDivers.get(i).getName());
+            }
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        addCommandLine();
+        initTerminal();
+
+    }
+
     private static void printDroppedDivers() {
         ArrayList<Diver> droppedDivers = (ArrayList<Diver>) DivingClub.getInstance().getDiversNotCapableForDive();
         System.out.print(ANSI_ESC + "2J");
@@ -132,11 +176,11 @@ public class TerminalHelper {
 
             if (i == numberOfTerminalRows) {
                 System.out.print(ANSI_ESC + (numberOfTerminalRows - i) + ";1f");
-                System.out.print(clonedDiverList.get(i).getName());
+                System.out.print(droppedDivers.get(i).getName());
                 break;
             } else {
                 System.out.print(ANSI_ESC + (numberOfTerminalRows - i) + ";1f");
-                System.out.print(clonedDiverList.get(i).getName());
+                System.out.print(droppedDivers.get(i).getName());
             }
 
             try {
@@ -152,12 +196,16 @@ public class TerminalHelper {
 
     private static void changeGearJoiningType(String command) {
         String[] splitCommand = command.split(" ");
-        for (Diver d : initialDiverList) {
+        for (Diver d : clonedDiverList) {
             if (d.getName().equals(splitCommand[1])) {
                 if (d.isMinimalGear()) d.setMinimalGear(false);
                 else d.setMinimalGear(true);
             }
         }
+
+        terminalOriginator.setState(clonedDiverList);
+        terminalCaretaker.addMemento(terminalOriginator.saveToMemento());
+        numOfSavedStates++;
     }
 
     private static void resetScreen() {
