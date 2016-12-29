@@ -22,19 +22,20 @@ public class InventorySupplier {
     }
 
     private void findItems(Diver diver, List<InventoryComponent> inventoryComponents) {
-        boolean isDiverSupplied = false;
+        boolean isMinimalEquipmentSupplied = false;
         for (InventoryComponent inventoryComponent: inventoryComponents) {
             if (inventoryComponent instanceof Item) {
                 if (supplyDiverWithItem(diver, (Item)inventoryComponent)) {
-                    isDiverSupplied = true;
+                    isMinimalEquipmentSupplied = true;
+                    if (diver.isMinimalGear()) {
+                        break;
+                    }
+                    diver.removeExtraInventoryItem();
                     break;
                 }
             } else {
                 findItems(diver, ((ItemGroup)inventoryComponents).getComponents());
             }
-        }
-        if (!isDiverSupplied) {
-            diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
         }
     }
 
@@ -42,13 +43,11 @@ public class InventorySupplier {
         boolean isNightDive = Dive.getInstance().isNightDive();
         int waterTemperature = Dive.getInstance().getWaterTemperature();
         int numberOfRecorders = Dive.getInstance().getNumberOfRecorders();
-        if (item.getAllowedTemperature().equals("#") || Integer.parseInt(item.getAllowedTemperature()) <= waterTemperature) {
-            if (item.getNumberOfItems() > 0) {
-                diver.addInventoryItem(item);
-            }
+        if (!item.getAllowedTemperature().equals("#") && Integer.parseInt(item.getAllowedTemperature()) > waterTemperature) {
+            return false;
         }
         if (item.getHood().equals("+")) {
-
+            
         }
     }
 }

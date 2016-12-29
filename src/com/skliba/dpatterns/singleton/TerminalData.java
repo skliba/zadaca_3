@@ -21,31 +21,31 @@ public class TerminalData {
         return instance;
     }
 
-    public static int getNumberOfRows() {
+    public int getNumberOfRows() {
         return numberOfRows;
     }
 
-    public static void setNumberOfRows(int numberOfRows) {
+    public void setNumberOfRows(int numberOfRows) {
         TerminalData.numberOfRows = numberOfRows;
     }
 
-    public static int getNumberOfColumns() {
+    public int getNumberOfColumns() {
         return numberOfColumns;
     }
 
-    public static void setNumberOfColumns(int numberOfColumns) {
+    public void setNumberOfColumns(int numberOfColumns) {
         TerminalData.numberOfColumns = numberOfColumns;
     }
 
-    public static int getContainerRowsNumber() {
+    public int getContainerRowsNumber() {
         return containerRowsNumber;
     }
 
-    public static void setContainerRowsNumber(int containerRowsNumber) {
+    public void setContainerRowsNumber(int containerRowsNumber) {
         TerminalData.containerRowsNumber = containerRowsNumber;
     }
 
-    public static void setInstance(TerminalData instance) {
+    public void setInstance(TerminalData instance) {
         TerminalData.instance = instance;
     }
 

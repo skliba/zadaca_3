@@ -8,7 +8,7 @@ import com.skliba.SpecialDivingSkill;
 import com.skliba.dpatterns.composite.Item;
 import com.skliba.models.DiverDiveInformation;
 
-public class Diver implements Visitable {
+public class Diver implements Visitable, Cloneable {
 
     private String name;
     private String certType;
@@ -20,6 +20,7 @@ public class Diver implements Visitable {
     private List<SpecialDivingSkill> specialDivingSkills = new ArrayList<>();
     private List<Item> inventoryItems = new ArrayList<>();
     private DiverInventoryLevel diverInventoryLevel;
+    private boolean minimalGear = true;
 
     private static final String SSI = "SSI";
     private static final String CMAS = "CMAS";
@@ -420,4 +421,20 @@ public class Diver implements Visitable {
         inventoryItems.add(item);
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public boolean isMinimalGear() {
+        return minimalGear;
+    }
+
+    public void setMinimalGear(boolean minimalGear) {
+        this.minimalGear = minimalGear;
+    }
+
+    public void removeExtraInventoryItem() {
+        inventoryItems.remove(inventoryItems.size() - 2);
+    }
 }
