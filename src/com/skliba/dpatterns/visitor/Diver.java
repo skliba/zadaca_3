@@ -3,7 +3,9 @@ package com.skliba.dpatterns.visitor;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.skliba.DiverInventoryLevel;
 import com.skliba.SpecialDivingSkill;
+import com.skliba.dpatterns.composite.Item;
 import com.skliba.models.DiverDiveInformation;
 
 public class Diver implements Visitable {
@@ -16,6 +18,8 @@ public class Diver implements Visitable {
     private String agencyName;
     private int maxDepth = 0;
     private List<SpecialDivingSkill> specialDivingSkills = new ArrayList<>();
+    private List<Item> inventoryItems = new ArrayList<>();
+    private DiverInventoryLevel diverInventoryLevel;
 
     private static final String SSI = "SSI";
     private static final String CMAS = "CMAS";
@@ -403,4 +407,17 @@ public class Diver implements Visitable {
     public boolean isUnderWaterPhotograph() {
         return specialDivingSkills.contains(SpecialDivingSkill.UNDERWATER_PHOTOGRAPH);
     }
+
+    public DiverInventoryLevel getDiverInventoryLevel() {
+        return diverInventoryLevel;
+    }
+
+    public void setDiverInventoryLevel(DiverInventoryLevel diverInventoryLevel) {
+        this.diverInventoryLevel = diverInventoryLevel;
+    }
+
+    public void addInventoryItem(Item item) {
+        inventoryItems.add(item);
+    }
+
 }
