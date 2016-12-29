@@ -6,7 +6,6 @@ import com.skliba.dpatterns.composite.ItemGroup;
 import com.skliba.dpatterns.singleton.InventoryData;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class GearParser extends Parser {
 
@@ -85,14 +84,40 @@ public class GearParser extends Parser {
             components.add(currentItem);
             return;
         }
+
         for (InventoryComponent inventoryComponent : components) {
-            if (currentItem.getCode().startsWith(inventoryComponent.getCode())) {
+
+            if (inventoryComponent instanceof ItemGroup) {
+
+                if (((ItemGroup) inventoryComponent).getComponents().isEmpty()) {
+
+                    inventoryComponent.addItem(currentItem);
+                    return;
+
+                } else {
+
+                    if (currentItem.getCode().startsWith(inventoryComponent.getCode())) {
+
+                        if (checkSerialLength(currentItem, inventoryComponent)) {
+                            inventoryComponent.addItem(currentItem);
+                            return;
+
+                        } else {
+                            goDeep((ItemGroup) inventoryComponent, ((ItemGroup) inventoryComponent).getComponents(), currentItem);
+                        }
+                    }
+                }
+            } else {
                 ig.addItem(currentItem);
                 return;
-            } else {
-                goDeep((ItemGroup) inventoryComponent, ((ItemGroup) inventoryComponent).getComponents(), currentItem);
             }
         }
+    }
+
+    private boolean checkSerialLength(Item currentItem, InventoryComponent inventoryComponent) {
+        String[] currentItemNumbers = currentItem.getCode().split("\\.");
+        String[] lastInventoryComponentNumbers = inventoryComponent.getCode().split("\\.");
+        return (currentItemNumbers.length - 1) == lastInventoryComponentNumbers.length;
     }
 
     @Override
