@@ -18,7 +18,10 @@ public class DivingClub {
     private ConcreteVisitor concreteVisitor = new ConcreteVisitor();
     private ArrayList<Diver> divers;
     private ArrayList<Divings> divings;
+
     private List<Diver> diversCapableForDive;
+    private List<Diver> diversNotCapableForDive;
+
     private List<String> certificateList = Collections.unmodifiableList(Arrays.asList(
             "R0",
             "R1",
@@ -107,6 +110,14 @@ public class DivingClub {
                 o.update(diver, diver.getMaxDepth());
             }
         }
+    }
+
+    public List<Diver> getDiversNotCapableForDive() {
+        return diversNotCapableForDive;
+    }
+
+    public void setDiversNotCapableForDive(List<Diver> diversNotCapableForDive) {
+        this.diversNotCapableForDive = diversNotCapableForDive;
     }
 
     public void setDiversCapableForDive(List<Diver> diversCapableForDive) {

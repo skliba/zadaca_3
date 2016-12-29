@@ -2,6 +2,7 @@ package com.skliba;
 
 import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.helpers.TerminalHelper;
 import com.skliba.parsers.Parser;
 import com.skliba.dpatterns.singleton.Dive;
 import com.skliba.dpatterns.singleton.TerminalData;
@@ -25,23 +26,33 @@ public class Main {
             Main main = new Main();
             main.checkArguments(args);
             main.createInitialDiverList(DivingClub.getInstance().getDivers(), args);
+            TerminalHelper.init();
+            TerminalHelper.printInitialList();
         } else {
             throw new IllegalArgumentException("Invalid number of arguments sent you've sent: " + args.length);
         }
     }
 
     private void createInitialDiverList(List<Diver> divers, String[] arguments) {
+
         List<Diver> diversCapableForDive = new ArrayList<>();
+        List<Diver> diversNotCapableForDive = new ArrayList<>();
+
         int diveDepth = Integer.parseInt(arguments[6]);
         int waterTemperature = Integer.parseInt(arguments[7]);
         boolean isNightDive = "1".equals(arguments[8]);
         int numberOfUnderwaterRecorders = Integer.parseInt(arguments[9]);
-        for (Diver diver: divers) {
+
+        for (Diver diver : divers) {
             if (isDiverCapableForDive(diver, diveDepth, waterTemperature, isNightDive, numberOfUnderwaterRecorders)) {
                 diversCapableForDive.add(diver);
                 numberOfUnderwaterRecorders--;
+            } else {
+                diversNotCapableForDive.add(diver);
             }
         }
+
+        DivingClub.getInstance().setDiversNotCapableForDive(diversNotCapableForDive);
         DivingClub.getInstance().setDiversCapableForDive(diversCapableForDive);
     }
 
