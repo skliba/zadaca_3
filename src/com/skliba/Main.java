@@ -1,5 +1,7 @@
 package com.skliba;
 
+import com.skliba.dpatterns.mvc.view.TerminalGearView;
+import com.skliba.dpatterns.mvc.view.TerminalGearViewImpl;
 import com.skliba.dpatterns.mvc.view.TerminalView;
 import com.skliba.dpatterns.mvc.view.TerminalViewImpl;
 import com.skliba.dpatterns.singleton.DivingClub;
@@ -119,7 +121,12 @@ public class Main implements StageListener {
     public void onNewPhasePressed() {
         InventorySupplier inventorySupplier = new InventorySupplier();
         List<Diver> workingDivers = DivingClub.getInstance().getWorkingDiversList();
-        for (Diver workingDiver: workingDivers) {
+
+        for (Diver d : workingDivers) {
+            d.setDiverInventoryLevel(DiverInventoryLevel.FULLY_EQUIPPED);
+        }
+
+        for (Diver workingDiver : workingDivers) {
             inventorySupplier.supplyDiverWithInventory(workingDiver);
             if (workingDiver.getDiverInventoryLevel() == DiverInventoryLevel.NOT_EQUIPPED) {
                 workingDiver.getInventoryItems().clear();
@@ -127,5 +134,8 @@ public class Main implements StageListener {
                 workingDiver.reduceInventoryQuantity();
             }
         }
+
+        TerminalGearView terminalGearView = new TerminalGearViewImpl();
+        terminalGearView.initView();
     }
 }

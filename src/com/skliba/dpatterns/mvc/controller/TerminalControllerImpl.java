@@ -128,7 +128,6 @@ public class TerminalControllerImpl implements TerminalController {
         } else if (command.equals("N")) {
             DivingClub.getInstance().setWorkingDiversList(clonedDiverList);
             view.onNewStage();
-
         } else {
 
             //If deleting diver is triggered
@@ -252,7 +251,6 @@ public class TerminalControllerImpl implements TerminalController {
         view.clearScreen();
         for (int i = 0; i < currentlyVisibleDivers.size(); i++) {
             view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i).getName());
-
         }
         view.addCommandLine(numberOfRows);
         initTerminal();

@@ -6,4 +6,6 @@ public interface TerminalGearController {
 
     void printDiversWithGear();
 
+    void returnToPreviousStep();
+
 }

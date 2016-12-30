@@ -342,10 +342,7 @@ public class InventorySupplier {
     }
 
     private boolean isItemAvailableAndIsForRecording(String key, Item item) {
-        if (item.getCode().startsWith(key) && item.getNumberOfItems() > 0 && Dive.getInstance().getNumberOfRecorders() > 0) {
-            return true;
-        }
-        return false;
+        return item.getCode().startsWith(key) && item.getNumberOfItems() > 0 && Dive.getInstance().getNumberOfRecorders() > 0;
     }
 
     private boolean isUsedAtNightAndAvailable(String key, Item item) {

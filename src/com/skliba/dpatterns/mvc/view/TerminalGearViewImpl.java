@@ -33,10 +33,11 @@ public class TerminalGearViewImpl implements TerminalGearView {
     public int printNames(int yCoordinate, Diver name) {
         System.out.print(ANSI_ESC + yCoordinate + ";1f");
         System.out.print(name);
-        for (int i = 0; i < name.getInventoryItems().size(); i++) {
+        /*for (int i = 0; i < name.getInventoryItems().size(); i++) {
             System.out.print(ANSI_ESC + (yCoordinate - 1) + ";1f");
             System.out.print(name.getInventoryItems().get(i));
         }
+        */
         return name.getInventoryItems().size();
     }
 
