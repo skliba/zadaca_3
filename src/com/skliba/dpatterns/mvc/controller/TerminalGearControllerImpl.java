@@ -8,12 +8,9 @@ import com.skliba.dpatterns.singleton.TerminalData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class TerminalGearControllerImpl implements TerminalGearController {
-
-    private final String COMMAND_NAME_REGEX = "^N [A-Za-z]+$";
 
     private TerminalGearView view;
 

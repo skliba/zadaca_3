@@ -40,7 +40,7 @@ public class TerminalViewImpl implements TerminalView {
     @Override
     public void printNames(int yCoordinate, Diver name) {
         System.out.print(ANSI_ESC + (yCoordinate) + ";1f");
-        System.out.print(name);
+        System.out.print(name.getName() + " " + name.getCertType() + " " + name.getMaxDepth());
     }
 
     @Override

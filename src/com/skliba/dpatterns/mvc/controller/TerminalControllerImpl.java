@@ -70,7 +70,7 @@ public class TerminalControllerImpl implements TerminalController {
             currentlyVisibleDivers.add(clonedDiverList.get(i));
 
             if (i == numberOfTerminalRows) {
-                view.printNames(numberOfTerminalRows - i, clonedDiverList.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, clonedDiverList.get(i));
                 break;
             } else {
                 view.printNames(numberOfTerminalRows - i, clonedDiverList.get(i));
@@ -147,10 +147,10 @@ public class TerminalControllerImpl implements TerminalController {
         currentlyVisibleDivers.remove(d);
         for (int i = 0; i < currentlyVisibleDivers.size(); i++) {
             if (i == numberOfTerminalRows) {
-                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i));
                 break;
             } else {
-                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i));
             }
         }
 
@@ -167,10 +167,10 @@ public class TerminalControllerImpl implements TerminalController {
 
         for (int i = 0; i < currentlyVisibleDivers.size(); i++) {
             if (i == numberOfTerminalRows) {
-                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i));
                 break;
             } else {
-                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i));
             }
         }
         view.addCommandLine(numberOfRows);
@@ -188,10 +188,10 @@ public class TerminalControllerImpl implements TerminalController {
             currentlyVisibleDivers.add(restoredDivers.get(i));
 
             if (i == numberOfTerminalRows) {
-                view.printNames(numberOfTerminalRows - i, restoredDivers.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, restoredDivers.get(i));
                 break;
             } else {
-                view.printNames(numberOfTerminalRows - i, restoredDivers.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, restoredDivers.get(i));
             }
 
             try {
@@ -216,10 +216,10 @@ public class TerminalControllerImpl implements TerminalController {
             currentlyVisibleDivers.add(droppedDivers.get(i));
 
             if (i == numberOfTerminalRows) {
-                view.printNames(numberOfTerminalRows - i, droppedDivers.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, droppedDivers.get(i));
                 break;
             } else {
-                view.printNames(numberOfTerminalRows - i, droppedDivers.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, droppedDivers.get(i));
             }
 
             try {
@@ -250,7 +250,7 @@ public class TerminalControllerImpl implements TerminalController {
     private void resetScreen() {
         view.clearScreen();
         for (int i = 0; i < currentlyVisibleDivers.size(); i++) {
-            view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i).getName());
+            view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i));
         }
         view.addCommandLine(numberOfRows);
         initTerminal();
@@ -265,7 +265,7 @@ public class TerminalControllerImpl implements TerminalController {
             currentlyVisibleDivers.add(divers.get(numberOfTerminalRows + movedUpSpaces));
 
             for (int i = 0; i < currentlyVisibleDivers.size(); i++) {
-                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i));
             }
             view.addCommandLine(numberOfRows);
         }
@@ -278,7 +278,7 @@ public class TerminalControllerImpl implements TerminalController {
             currentlyVisibleDivers.add(0, divers.get(movedUpSpaces));
             currentlyVisibleDivers.remove(currentlyVisibleDivers.size() - 1);
             for (int i = 0; i < currentlyVisibleDivers.size(); i++) {
-                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i));
             }
             view.addCommandLine(numberOfRows);
         }
