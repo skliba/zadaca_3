@@ -182,7 +182,7 @@ public class InventorySupplier {
         for (Item item : itemsArrayList) {
             if (isItemInStock(UNDERWATER_BOTTLE, item)) {
                 if (!diver.hasInventoryItemOfSpecificCategory(UNDERWATER_BOTTLE)) {
-                    diver.addInventoryItem(item);
+                    addBetterInventoryIfApplicable(diver, item, UNDERWATER_BOTTLE);
                 }
                 return;
             }
@@ -204,7 +204,7 @@ public class InventorySupplier {
         for (Item item : itemsArrayList) {
             if (isItemInStock(BCD, item)) {
                 if (!diver.hasInventoryItemOfSpecificCategory(BCD)) {
-                    diver.addInventoryItem(item);
+                    addBetterInventoryIfApplicable(diver, item, BCD);
                 }
                 return;
             }
@@ -217,7 +217,7 @@ public class InventorySupplier {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(REGULATOR_KEY, item)) {
                 if (!diver.hasInventoryItemOfSpecificCategory(REGULATOR_KEY)) {
-                    diver.addInventoryItem(item);
+                    addBetterInventoryIfApplicable(diver, item, REGULATOR_KEY);
                 }
                 return;
             }
@@ -229,7 +229,7 @@ public class InventorySupplier {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(BOOTS_KEY, item)) {
                 if (!diver.hasInventoryItemOfSpecificCategory(BOOTS_KEY)) {
-                    diver.addInventoryItem(item);
+                    addBetterInventoryIfApplicable(diver, item, BOOTS_KEY);
                 }
                 return;
             }
@@ -237,11 +237,34 @@ public class InventorySupplier {
         diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
     }
 
+    private void addBetterInventoryIfApplicable(Diver diver, Item item, String categoryKey) {
+        if (diver.isMinimalGear()) {
+            diver.addInventoryItem(item);
+        } else {
+            Item betterItem = getBetterItem(categoryKey, item.getCode());
+            if (betterItem != null) {
+                diver.addInventoryItem(betterItem);
+            } else {
+                diver.setDiverInventoryLevel(DiverInventoryLevel.PARTIALLY_EQUIPPED);
+                diver.addInventoryItem(item);
+            }
+        }
+    }
+
+    private Item getBetterItem(String categoryKey, String currentItemCode) {
+        for (Item item: itemsArrayList) {
+            if (item.getCode().startsWith(categoryKey) && currentItemCode.compareTo(item.getCode()) < 0) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     private void findMatchingGloves(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(GLOVES_KEY, item)) {
                 if (!diver.hasInventoryItemOfSpecificCategory(GLOVES_KEY)) {
-                    diver.addInventoryItem(item);
+                    addBetterInventoryIfApplicable(diver, item, GLOVES_KEY);
                 }
                 return;
             }
@@ -264,7 +287,7 @@ public class InventorySupplier {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(WET_SUIT_KEY, item)) {
                 suitAlreadyFound = true;
-                diver.addInventoryItem(item);
+                addBetterInventoryIfApplicable(diver, item, WET_SUIT_KEY);
                 if (item.getHood().equals("+")) {
                     findAdequateHood(diver);
                 }
@@ -278,7 +301,7 @@ public class InventorySupplier {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(HOOD_KEY, item)) {
                 if (!diver.hasInventoryItemOfSpecificCategory(HOOD_KEY)) {
-                    diver.addInventoryItem(item);
+                    addBetterInventoryIfApplicable(diver, item, HOOD_KEY);
                 }
                 return;
             }
@@ -290,7 +313,7 @@ public class InventorySupplier {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(DRY_SUIT_KEY, item)) {
                 suitAlreadyFound = true;
-                diver.addInventoryItem(item);
+                addBetterInventoryIfApplicable(diver, item, DRY_SUIT_KEY);
                 findMatchingUnderSuit(diver);
                 return;
             }
@@ -301,7 +324,7 @@ public class InventorySupplier {
     private void findMatchingUnderSuit(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(UNDERSUIT_KEY, item)) {
-                diver.addInventoryItem(item);
+                addBetterInventoryIfApplicable(diver, item, UNDERSUIT_KEY);
                 return;
             }
         }
