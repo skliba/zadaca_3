@@ -122,6 +122,5 @@ public class GearParser extends Parser {
 
     @Override
     void parseComplete() {
-        System.out.println("Im done");
     }
 }
