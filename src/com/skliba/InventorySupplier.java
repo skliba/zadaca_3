@@ -64,7 +64,7 @@ public class InventorySupplier {
             if (inventoryComponent instanceof Item) {
                 supplyDiverWithItem(diver, (Item) inventoryComponent);
             } else {
-                findItems(diver, ((ItemGroup) inventoryComponents).getComponents());
+                findItems(diver, ((ItemGroup) inventoryComponent).getComponents());
             }
         }
 
@@ -119,8 +119,9 @@ public class InventorySupplier {
     private void findLight(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAvailableAndIsForRecording(UNDERWATER_LIGHT, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if (!diver.hasInventoryItemOfSpecificCategory(UNDERWATER_LIGHT)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
         }
@@ -130,8 +131,9 @@ public class InventorySupplier {
     private void findCamera(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAvailableAndIsForRecording(PHOTO_VIDEO_CAMERA, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if(!diver.hasInventoryItemOfSpecificCategory(PHOTO_VIDEO_CAMERA)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
         }
@@ -141,14 +143,16 @@ public class InventorySupplier {
     private void findAdditionalGear(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isUsedAtNightAndAvailable(NIGHT_LIGHT_KEY, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if (!diver.hasSpecificInventoryItem(item)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
 
             if (isItemInStock(ADDITIONAL_GEAR, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if (!diver.hasSpecificInventoryItem(item)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
         }
@@ -158,14 +162,16 @@ public class InventorySupplier {
     private void findComputer(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isUsedAtNightAndAvailable(DIVING_COMPUTER, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if (!diver.hasSpecificInventoryItem(item)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
 
             if (isItemInStock(DIVING_INSTRUMENTS, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if (!diver.hasSpecificInventoryItem(item)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
         }
@@ -175,8 +181,9 @@ public class InventorySupplier {
     private void findBottle(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemInStock(UNDERWATER_BOTTLE, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if (!diver.hasInventoryItemOfSpecificCategory(UNDERWATER_BOTTLE)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
         }
@@ -186,7 +193,6 @@ public class InventorySupplier {
     private void findIronBelt(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemInStock(IRON_BELT, item)) {
-                //TODO decrement number of items in stock
                 diver.addInventoryItem(item);
                 return;
             }
@@ -197,8 +203,9 @@ public class InventorySupplier {
     private void findBcd(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemInStock(BCD, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if (!diver.hasInventoryItemOfSpecificCategory(BCD)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
         }
@@ -209,8 +216,9 @@ public class InventorySupplier {
     private void findRegulator(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(REGULATOR_KEY, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if (!diver.hasInventoryItemOfSpecificCategory(REGULATOR_KEY)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
         }
@@ -220,8 +228,9 @@ public class InventorySupplier {
     private void findAdequateBoots(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(BOOTS_KEY, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if (!diver.hasInventoryItemOfSpecificCategory(BOOTS_KEY)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
         }
@@ -231,8 +240,9 @@ public class InventorySupplier {
     private void findMatchingGloves(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(GLOVES_KEY, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if (!diver.hasInventoryItemOfSpecificCategory(GLOVES_KEY)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
         }
@@ -242,7 +252,6 @@ public class InventorySupplier {
     private void findMatchingHalfWetSuit(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(HALF_WET_SUIT_KEY, item)) {
-                //TODO decrement number of items in stock
                 suitAlreadyFound = true;
                 diver.addInventoryItem(item);
                 return;
@@ -254,7 +263,6 @@ public class InventorySupplier {
     private void findMatchingWetSuit(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(WET_SUIT_KEY, item)) {
-                //TODO decrement number of items in stock
                 suitAlreadyFound = true;
                 diver.addInventoryItem(item);
                 if (item.getHood().equals("+")) {
@@ -269,8 +277,9 @@ public class InventorySupplier {
     private void findAdequateHood(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(HOOD_KEY, item)) {
-                //TODO decrement number of items in stock
-                diver.addInventoryItem(item);
+                if (!diver.hasInventoryItemOfSpecificCategory(HOOD_KEY)) {
+                    diver.addInventoryItem(item);
+                }
                 return;
             }
         }
@@ -280,7 +289,6 @@ public class InventorySupplier {
     private void findMatchingDrySuit(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(DRY_SUIT_KEY, item)) {
-                //TODO decrement number of items in stock.
                 suitAlreadyFound = true;
                 diver.addInventoryItem(item);
                 findMatchingUnderSuit(diver);
@@ -293,7 +301,6 @@ public class InventorySupplier {
     private void findMatchingUnderSuit(Diver diver) {
         for (Item item : itemsArrayList) {
             if (isItemAdequate(UNDERSUIT_KEY, item)) {
-                //TODO decrement number of items in stock
                 diver.addInventoryItem(item);
                 return;
             }
@@ -312,7 +319,6 @@ public class InventorySupplier {
 
     private boolean isItemAvailableAndIsForRecording(String key, Item item) {
         if (item.getCode().startsWith(key) && item.getNumberOfItems() > 0 && Dive.getInstance().getNumberOfRecorders() > 0) {
-            //TODO decrement number of recorders
             return true;
         }
         return false;

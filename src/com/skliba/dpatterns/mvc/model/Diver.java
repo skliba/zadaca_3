@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.skliba.DiverInventoryLevel;
+import com.skliba.InventorySupplier;
 import com.skliba.SpecialDivingSkill;
 import com.skliba.dpatterns.composite.Item;
 import com.skliba.dpatterns.observer.Observer;
@@ -11,7 +12,7 @@ import com.skliba.dpatterns.visitor.Visitable;
 import com.skliba.dpatterns.visitor.Visitor;
 import com.skliba.models.DiverDiveInformation;
 
-public class Diver implements Visitable, Cloneable, Observer {
+public class Diver implements Visitable, Cloneable {
 
     private String name;
     private String certType;
@@ -151,7 +152,7 @@ public class Diver implements Visitable, Cloneable, Observer {
         return certName;
     }
 
-    public void setCertName() {
+    private void setCertName() {
         char pro = certType.charAt(0);
         char degree = certType.charAt(1);
         switch (agencyName) {
@@ -437,14 +438,27 @@ public class Diver implements Visitable, Cloneable, Observer {
         this.minimalGear = minimalGear;
     }
 
-    @Override
-    public void update() {
-        for (Item item: inventoryItems) {
-            if (item.getNumberOfItems() > 0) {
-            } else {
+    public List<Item> getInventoryItems() {
+        return inventoryItems;
+    }
 
+    public void reduceInventoryQuantity() {
+        for (Item item: inventoryItems) {
+            item.reduceNumberOfItems();
+        }
+    }
+
+    public boolean hasInventoryItemOfSpecificCategory(String categoryKey) {
+        for (Item item: inventoryItems) {
+            if (item.getCode().startsWith(categoryKey)) {
+                return true;
             }
         }
+        return false;
+    }
+
+    public boolean hasSpecificInventoryItem(Item item) {
+        return inventoryItems.contains(item);
     }
 
     @Override
