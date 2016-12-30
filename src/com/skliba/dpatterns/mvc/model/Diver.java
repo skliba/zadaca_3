@@ -6,11 +6,12 @@ import java.util.List;
 import com.skliba.DiverInventoryLevel;
 import com.skliba.SpecialDivingSkill;
 import com.skliba.dpatterns.composite.Item;
+import com.skliba.dpatterns.observer.Observer;
 import com.skliba.dpatterns.visitor.Visitable;
 import com.skliba.dpatterns.visitor.Visitor;
 import com.skliba.models.DiverDiveInformation;
 
-public class Diver implements Visitable, Cloneable {
+public class Diver implements Visitable, Cloneable, Observer {
 
     private String name;
     private String certType;
@@ -436,4 +437,13 @@ public class Diver implements Visitable, Cloneable {
         this.minimalGear = minimalGear;
     }
 
+    @Override
+    public void update() {
+        for (Item item: inventoryItems) {
+            if (item.getNumberOfItems() > 0) {
+            } else {
+
+            }
+        }
+    }
 }

@@ -6,7 +6,7 @@ import com.skliba.dpatterns.mvc.model.Diver;
 
 import java.util.ArrayList;
 
-public class Agency implements Observer, Visitable {
+public class Agency implements Visitable {
 
     private String name;
 
@@ -27,14 +27,6 @@ public class Agency implements Observer, Visitable {
 
     public ArrayList<Diver> getDiverInAgency() {
         return diverInAgency;
-    }
-
-    @Override
-    public void update(Diver diver, int diveDepth) {
-        if (diver.getAgencyName().equals(name)) {
-            diverInAgency.add(diver);
-            calculateAvgDepth(diveDepth);
-        }
     }
 
     private void calculateAvgDepth(int diveDepth) {
