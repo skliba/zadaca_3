@@ -8,6 +8,7 @@ import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.dpatterns.singleton.TerminalData;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +37,8 @@ public class TerminalControllerImpl implements TerminalController {
     private int numOfSavedStates = 0;
 
     private TerminalView view;
+
+    private List<Object> buffer = new ArrayList<>();
 
     public TerminalControllerImpl(TerminalView view) {
         this.view = view;
@@ -73,7 +76,7 @@ public class TerminalControllerImpl implements TerminalController {
                 view.printNames(numberOfTerminalRows - i, clonedDiverList.get(i).getName());
                 break;
             } else {
-                view.printNames(numberOfTerminalRows - i, clonedDiverList.get(i).getName());
+                view.printNames(numberOfTerminalRows - i, clonedDiverList.get(i));
             }
 
             try {
@@ -92,59 +95,53 @@ public class TerminalControllerImpl implements TerminalController {
 
     private void initTerminal() {
 
-        while (true) {
-            String command = view.getUserInputFromScanner();
+        String command = view.getUserInputFromScanner();
 
-            Pattern p = Pattern.compile(COMMAND_NAME_REGEX);
-            Matcher m = p.matcher(command);
+        Pattern p = Pattern.compile(COMMAND_NAME_REGEX);
+        Matcher m = p.matcher(command);
 
-            if (m.matches()) {
-                changeGearJoiningType(command);
-                resetScreen();
-                break;
-            } else if (command.equals("P")) {
-                printDroppedDivers();
-                break;
-            } else if (command.equals("V")) {
-                printInitialListState();
-                break;
-            } else if (command.equals("G")) {
+        if (m.matches()) {
+            changeGearJoiningType(command);
+            resetScreen();
 
-                if (clonedDiverList.size() > numberOfTerminalRows) {
-                    moveScreenUp(clonedDiverList, currentlyVisibleDivers);
-                    break;
-                } else {
-                    resetScreen();
-                    break;
-                }
+        } else if (command.equals("P")) {
+            printDroppedDivers();
+        } else if (command.equals("V")) {
+            printInitialListState();
+        } else if (command.equals("G")) {
 
-            } else if (command.equals("D")) {
+            if (clonedDiverList.size() > numberOfTerminalRows) {
+                moveScreenUp(clonedDiverList, currentlyVisibleDivers);
 
-                if (clonedDiverList.size() > numberOfTerminalRows) moveScreenDown(clonedDiverList, currentlyVisibleDivers);
-
-                else {
-                    resetScreen();
-                    break;
-                }
-
-            } else if (command.equals("Q")) {
-                break;
-            } else if (command.equals("N")) {
-                DivingClub.getInstance().setWorkingDiversList(clonedDiverList);
-                view.onNewStage();
             } else {
-
-                //If deleting diver is triggered
-                for (Diver d : clonedDiverList) {
-                    if (command.equals(d.getName())) {
-                        deleteDiverFromList(d);
-                        break;
-                    }
-                }
-
-                resetCommandLine();
-                break;
+                resetScreen();
             }
+
+        } else if (command.equals("D")) {
+
+            if (clonedDiverList.size() > numberOfTerminalRows) {
+                moveScreenDown(clonedDiverList, currentlyVisibleDivers);
+            } else {
+                resetScreen();
+
+            }
+
+        } else if (command.equals("Q")) {
+
+        } else if (command.equals("N")) {
+            DivingClub.getInstance().setWorkingDiversList(clonedDiverList);
+            view.onNewStage();
+
+        } else {
+
+            //If deleting diver is triggered
+            for (Diver d : clonedDiverList) {
+                if (command.equals(d.getName())) {
+                    deleteDiverFromList(d);
+                    return;
+                }
+            }
+            resetCommandLine();
         }
     }
 
@@ -161,11 +158,9 @@ public class TerminalControllerImpl implements TerminalController {
             }
         }
 
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        terminalOriginator.setState(clonedDiverList);
+        terminalCaretaker.addMemento(terminalOriginator.saveToMemento());
+        numOfSavedStates++;
 
         view.addCommandLine(numberOfRows);
         initTerminal();

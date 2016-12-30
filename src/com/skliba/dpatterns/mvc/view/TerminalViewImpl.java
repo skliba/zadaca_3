@@ -2,6 +2,7 @@ package com.skliba.dpatterns.mvc.view;
 
 import com.skliba.dpatterns.factory.MVCFactory;
 import com.skliba.dpatterns.mvc.controller.TerminalController;
+import com.skliba.dpatterns.mvc.model.Diver;
 import com.skliba.listeners.StageListener;
 
 import java.util.Scanner;
@@ -32,6 +33,12 @@ public class TerminalViewImpl implements TerminalView {
 
     @Override
     public void printNames(int yCoordinate, String name) {
+        System.out.print(ANSI_ESC + (yCoordinate) + ";1f");
+        System.out.print(name);
+    }
+
+    @Override
+    public void printNames(int yCoordinate, Diver name) {
         System.out.print(ANSI_ESC + (yCoordinate) + ";1f");
         System.out.print(name);
     }

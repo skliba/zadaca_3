@@ -446,4 +446,9 @@ public class Diver implements Visitable, Cloneable, Observer {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getCertType() + " " + getDiverInventoryLevel();
+    }
 }

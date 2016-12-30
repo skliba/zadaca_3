@@ -1,5 +1,7 @@
 package com.skliba.dpatterns.mvc.view;
 
+import com.skliba.dpatterns.mvc.model.Diver;
+
 public interface TerminalView {
 
     void initView();
@@ -7,6 +9,8 @@ public interface TerminalView {
     void clearScreen();
 
     void printNames(int yCoordinate, String name);
+
+    void printNames(int yCoordinate, Diver name);
 
     void addCommandLine(int numberOfRows);
 
