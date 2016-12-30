@@ -77,4 +77,8 @@ public class Item extends InventoryComponent {
     private int getNumberOfSuppliedItems() {
         return originalNumberOfItems - numberOfItems;
     }
+
+    public String getSpecialStringRepresentation() {
+        return getCode() + " " + getName() + " ";
+    }
 }
