@@ -4,15 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.skliba.DiverInventoryLevel;
-import com.skliba.InventorySupplier;
 import com.skliba.SpecialDivingSkill;
 import com.skliba.dpatterns.composite.Item;
-import com.skliba.dpatterns.observer.Observer;
-import com.skliba.dpatterns.visitor.Visitable;
-import com.skliba.dpatterns.visitor.Visitor;
 import com.skliba.models.DiverDiveInformation;
 
-public class Diver implements Visitable, Cloneable {
+public class Diver implements Cloneable {
 
     private String name;
     private String certType;
@@ -394,11 +390,6 @@ public class Diver implements Visitable, Cloneable {
 
     public int getMaxDepth() {
         return maxDepth;
-    }
-
-    @Override
-    public void accept(Visitor visitor) {
-        visitor.visitDiver(this);
     }
 
     public boolean canUseDrySuit() {

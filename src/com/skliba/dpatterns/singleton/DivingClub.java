@@ -1,7 +1,5 @@
 package com.skliba.dpatterns.singleton;
 
-import com.skliba.dpatterns.observer.Observer;
-import com.skliba.dpatterns.visitor.ConcreteVisitor;
 import com.skliba.dpatterns.mvc.model.Diver;
 import com.skliba.models.Divings;
 import java.util.ArrayList;
@@ -12,7 +10,6 @@ import java.util.List;
 public class DivingClub {
 
     private static DivingClub instance;
-    private ConcreteVisitor concreteVisitor = new ConcreteVisitor();
     private ArrayList<Diver> divers;
     private ArrayList<Divings> divings;
 
@@ -35,8 +32,6 @@ public class DivingClub {
             "I5",
             "I6"));
 
-    private ArrayList<Observer> observers = new ArrayList<>();
-
     private ArrayList<Dive> eachDiveData;
 
     public static DivingClub getInstance() {
@@ -47,22 +42,10 @@ public class DivingClub {
         return instance;
     }
 
-    public ConcreteVisitor getConcreteVisitor() {
-        return concreteVisitor;
-    }
-
-    public void setConcreteVisitor(ConcreteVisitor concreteVisitor) {
-        this.concreteVisitor = concreteVisitor;
-    }
-
     /**
      * Private constructor in order to assure that the object cannot be instantiated outside the class itself.
      */
     private DivingClub() {
-    }
-
-    public ArrayList<Observer> getObservers() {
-        return observers;
     }
 
     public ArrayList<Diver> getDivers() {

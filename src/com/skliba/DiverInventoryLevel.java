@@ -9,7 +9,7 @@ public enum DiverInventoryLevel {
             case FULLY_EQUIPPED:
                 return "Fully equipped";
             case PARTIALLY_EQUIPPED:
-                return "Partically equipped";
+                return "Partially equipped";
             case NOT_EQUIPPED:
                 return "Not equipped";
             default:
