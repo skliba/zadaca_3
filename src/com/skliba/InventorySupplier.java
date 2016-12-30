@@ -129,8 +129,13 @@ public class InventorySupplier {
 
     private void findBottle(Diver diver) {
         for (Item item : itemsArrayList) {
-            if(item.ge)
+            if (isItemInStock(UNDERWATER_BOTTLE, item)) {
+                //TODO decrement number of items in stock
+                diver.addInventoryItem(item);
+                return;
+            }
         }
+        diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
     }
 
     private void findRegulator(Diver diver) {
@@ -233,5 +238,7 @@ public class InventorySupplier {
                 Integer.parseInt(item.getAllowedTemperature()) < Dive.getInstance().getWaterTemperature();
     }
 
-    private boolean is
+    private boolean isItemInStock(String key, Item item) {
+        return item.getCode().startsWith(key) && item.getNumberOfItems() > 0;
+    }
 }
