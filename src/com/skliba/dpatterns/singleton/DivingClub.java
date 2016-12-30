@@ -22,6 +22,8 @@ public class DivingClub {
     private List<Diver> diversCapableForDive;
     private List<Diver> diversNotCapableForDive;
 
+    private List<Diver> workingDiversList;
+
     private List<String> certificateList = Collections.unmodifiableList(Arrays.asList(
             "R0",
             "R1",
@@ -126,5 +128,13 @@ public class DivingClub {
 
     public List<Diver> getDiversCapableForDive() {
         return diversCapableForDive;
+    }
+
+    public List<Diver> getWorkingDiversList() {
+        return workingDiversList;
+    }
+
+    public void setWorkingDiversList(List<Diver> workingDiversList) {
+        this.workingDiversList = workingDiversList;
     }
 }

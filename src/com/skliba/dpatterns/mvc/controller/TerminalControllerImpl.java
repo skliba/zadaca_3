@@ -131,6 +131,7 @@ public class TerminalControllerImpl implements TerminalController {
             } else if (command.equals("Q")) {
                 break;
             } else if (command.equals("N")) {
+                DivingClub.getInstance().setWorkingDiversList(clonedDiverList);
                 view.onNewStage();
             } else {
 
