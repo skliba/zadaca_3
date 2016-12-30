@@ -1,7 +1,9 @@
 package com.skliba;
 
+import com.skliba.dpatterns.mvc.view.TerminalView;
+import com.skliba.dpatterns.mvc.view.TerminalViewImpl;
 import com.skliba.dpatterns.singleton.DivingClub;
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 import com.skliba.helpers.TerminalHelper;
 import com.skliba.parsers.Parser;
 import com.skliba.dpatterns.singleton.Dive;
@@ -27,8 +29,8 @@ public class Main {
             Main main = new Main();
             main.checkArguments(args);
             main.createInitialDiverList(DivingClub.getInstance().getDivers(), args);
-            TerminalHelper.init();
-            TerminalHelper.printInitialList();
+            TerminalView terminalView = new TerminalViewImpl();
+            terminalView.initView();
         } else {
             throw new IllegalArgumentException("Invalid number of arguments sent you've sent: " + args.length);
         }

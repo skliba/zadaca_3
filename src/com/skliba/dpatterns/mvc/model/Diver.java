@@ -1,4 +1,4 @@
-package com.skliba.dpatterns.visitor;
+package com.skliba.dpatterns.mvc.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.List;
 import com.skliba.DiverInventoryLevel;
 import com.skliba.SpecialDivingSkill;
 import com.skliba.dpatterns.composite.Item;
+import com.skliba.dpatterns.visitor.Visitable;
+import com.skliba.dpatterns.visitor.Visitor;
 import com.skliba.models.DiverDiveInformation;
 
 public class Diver implements Visitable, Cloneable {

@@ -1,11 +1,8 @@
 package com.skliba.helpers;
 
-import com.skliba.dpatterns.factory.AlgorithmFactory;
-import com.skliba.dpatterns.observer.Agency;
 import com.skliba.dpatterns.singleton.Dive;
 import com.skliba.dpatterns.singleton.DivingClub;
-import com.skliba.dpatterns.visitor.ConcreteVisitor;
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 import com.skliba.models.*;
 
 import java.util.*;
@@ -32,7 +29,7 @@ public class ReportHelper {
                 }
             }
 
-            diver.addASingleDiverInfo(new DiverDiveInformation(dive.getDiveDate(), dive.getDiveTime(),
+            diver.addASingleDiverInfo(new DiverDiveInformation(null, null,
                     (ArrayList<Diver>) divers.clone(), maxDepth));
             divers.add(diver);
             for (Diver d : DivingClub.getInstance().getDivers()) {

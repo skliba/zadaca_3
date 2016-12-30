@@ -1,6 +1,6 @@
 package com.skliba.dpatterns.singleton;
 
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 import com.skliba.models.Pair;
 import com.skliba.models.Triplet;
 

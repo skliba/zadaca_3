@@ -3,7 +3,7 @@ package com.skliba.dpatterns.singleton;
 import com.skliba.dpatterns.observer.Agency;
 import com.skliba.dpatterns.observer.Observer;
 import com.skliba.dpatterns.visitor.ConcreteVisitor;
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 import com.skliba.models.Divings;
 import com.skliba.dpatterns.observer.Institution;
 

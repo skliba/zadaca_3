@@ -1,6 +1,6 @@
 package com.skliba.dpatterns.memento;
 
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 
 import java.util.ArrayList;
 
