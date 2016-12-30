@@ -117,6 +117,15 @@ public class Main implements StageListener {
 
     @Override
     public void onNewPhasePressed() {
-
+        InventorySupplier inventorySupplier = new InventorySupplier();
+        List<Diver> workingDivers = DivingClub.getInstance().getWorkingDiversList();
+        for (Diver workingDiver: workingDivers) {
+            inventorySupplier.supplyDiverWithInventory(workingDiver);
+            if (workingDiver.getDiverInventoryLevel() == DiverInventoryLevel.NOT_EQUIPPED) {
+                workingDiver.getInventoryItems().clear();
+            } else {
+                workingDiver.reduceInventoryQuantity();
+            }
+        }
     }
 }

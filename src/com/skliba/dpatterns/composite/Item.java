@@ -68,4 +68,8 @@ public class Item extends InventoryComponent {
         System.out.println(getName() + " " + getAllowedTemperature() + " " + getHood() + " ");
         return "";
     }
+
+    public void reduceNumberOfItems() {
+        numberOfItems--;
+    }
 }
