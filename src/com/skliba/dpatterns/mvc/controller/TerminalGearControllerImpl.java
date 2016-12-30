@@ -41,7 +41,7 @@ public class TerminalGearControllerImpl implements TerminalGearController {
     @Override
     public void printDiversWithGear() {
         view.clearScreen();
-
+        System.out.print("Divers with gear");
         for (int i = 0; i < workingCopyOfDivers.size(); i++) {
             if (i == numberOfTerminalRows) {
                 view.printNames(numberOfTerminalRows - i, workingCopyOfDivers.get(i));
