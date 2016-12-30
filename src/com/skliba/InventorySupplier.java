@@ -36,6 +36,7 @@ public class InventorySupplier {
     private List<Item> itemsArrayList = new ArrayList<>();
 
     public void supplyDiverWithInventory(Diver diver) {
+        suitAlreadyFound = false;
         List<ItemGroup> itemGroups = InventoryData.getInstance().getItemGroups();
         for (ItemGroup itemGroup : itemGroups) {
             fillArrayListWithItems(itemGroup.getComponents());
