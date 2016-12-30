@@ -1,9 +1,11 @@
 package com.skliba.dpatterns.mvc.controller;
 
 import com.skliba.DiverInventoryLevel;
+import com.skliba.dpatterns.composite.Item;
 import com.skliba.dpatterns.mvc.model.Diver;
 import com.skliba.dpatterns.mvc.view.TerminalGearView;
 import com.skliba.dpatterns.singleton.DivingClub;
+import com.skliba.dpatterns.singleton.InventoryData;
 import com.skliba.dpatterns.singleton.TerminalData;
 
 import java.util.ArrayList;
@@ -94,6 +96,12 @@ public class TerminalGearControllerImpl implements TerminalGearController {
         } else if (command.equals("Q")) {
 
         } else {
+            for (Diver d : workingCopyOfDivers) {
+                if (command.equals(d.getName())) {
+                    printDiverGear(d);
+                    return;
+                }
+            }
             resetCommandLine();
         }
     }
@@ -123,6 +131,34 @@ public class TerminalGearControllerImpl implements TerminalGearController {
     }
 
     private void printRequiredGearForDive() {
+        view.clearScreen();
+        List<Item> diveItems = InventoryData.getInstance().getItems();
+        for (int i = 0, size = diveItems.size(); i < size; i++) {
+            currentlyVisibleInfo.add(String.valueOf(diveItems.get(i)));
+            if (i == numberOfTerminalRows) {
+                view.printNames(numberOfTerminalRows - i, diveItems.get(i).toString());
+                break;
+            } else {
+                view.printNames(numberOfTerminalRows - i, diveItems.get(i).toString());
+            }
+        }
+        view.addCommandLine(numberOfRows);
+        initTerminal();
+    }
 
+    private void printDiverGear(Diver diver) {
+        view.clearScreen();
+        List<Item> diveItems = diver.getInventoryItems();
+        for (int i = 0, size = diveItems.size(); i < size; i++) {
+            currentlyVisibleInfo.add(diveItems.get(i).getSpecialStringRepresentation());
+            if (i == numberOfTerminalRows) {
+                view.printNames(numberOfTerminalRows - i, diveItems.get(i).getSpecialStringRepresentation());
+                break;
+            } else {
+                view.printNames(numberOfTerminalRows - i, diveItems.get(i).getSpecialStringRepresentation());
+            }
+        }
+        view.addCommandLine(numberOfRows);
+        initTerminal();
     }
 }

@@ -7,7 +7,6 @@ import com.skliba.dpatterns.singleton.Dive;
 import com.skliba.dpatterns.singleton.InventoryData;
 import com.skliba.dpatterns.mvc.model.Diver;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InventorySupplier {
@@ -30,17 +29,15 @@ public class InventorySupplier {
     private static final String DIVING_COMPUTER = "4.1";
     private static final String BCD = "3.1";
     private static final String IRON_BELT = "3.2";
+    private static final String BREATHING_EQUIPMENT = "0";
 
     private boolean suitAlreadyFound = false;
 
-    private List<Item> itemsArrayList = new ArrayList<>();
+    private List<Item> itemsArrayList = InventoryData.getInstance().getItems();
 
     public void supplyDiverWithInventory(Diver diver) {
         suitAlreadyFound = false;
         List<ItemGroup> itemGroups = InventoryData.getInstance().getItemGroups();
-        for (ItemGroup itemGroup : itemGroups) {
-            fillArrayListWithItems(itemGroup.getComponents());
-        }
         for (ItemGroup itemGroup : itemGroups) {
             if (diver.getDiverInventoryLevel() == DiverInventoryLevel.NOT_EQUIPPED) {
                 break;
@@ -48,16 +45,6 @@ public class InventorySupplier {
             findItems(diver, itemGroup.getComponents());
         }
 
-    }
-
-    private void fillArrayListWithItems(ArrayList<InventoryComponent> itemGroup) {
-        for (InventoryComponent inventoryComponent : itemGroup) {
-            if (inventoryComponent instanceof Item) {
-                itemsArrayList.add((Item) inventoryComponent);
-            } else {
-                fillArrayListWithItems(((ItemGroup) inventoryComponent).getComponents());
-            }
-        }
     }
 
     private void findItems(Diver diver, List<InventoryComponent> inventoryComponents) {
@@ -106,15 +93,29 @@ public class InventorySupplier {
         } else if (item.getCode().startsWith(IRON_BELT)) {
             findIronBelt(diver);
         } else if (item.getCode().startsWith(DIVING_INSTRUMENTS)) {
-            findComputer(diver);
+            findComputer(diver, item);
         } else if (item.getCode().startsWith(ADDITIONAL_GEAR)) {
-            findAdditionalGear(diver);
+            findAdditionalGear(diver, item);
         } else if (item.getCode().startsWith(PHOTO_VIDEO_CAMERA)) {
             findCamera(diver);
         } else if (item.getCode().startsWith(UNDERWATER_LIGHT)) {
             findLight(diver);
+        } else if (item.getCode().startsWith(BREATHING_EQUIPMENT)) {
+            findBreathingEquipment(diver, item);
         }
 
+    }
+
+    private void findBreathingEquipment(Diver diver, Item currentItem) {
+        for (Item item : itemsArrayList) {
+            if (currentItem.getCode().equals(item.getCode()) && isItemInStock(BREATHING_EQUIPMENT, item)) {
+                if (!diver.hasSpecificInventoryItem(item)) {
+                    diver.addInventoryItem(item);
+                }
+                return;
+            }
+        }
+        diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
     }
 
     private void findLight(Diver diver) {
@@ -141,7 +142,7 @@ public class InventorySupplier {
         diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
     }
 
-    private void findAdditionalGear(Diver diver) {
+    private void findAdditionalGear(Diver diver, Item currentItem) {
         for (Item item : itemsArrayList) {
             if (isUsedAtNightAndAvailable(NIGHT_LIGHT_KEY, item)) {
                 if (!diver.hasSpecificInventoryItem(item)) {
@@ -150,7 +151,7 @@ public class InventorySupplier {
                 return;
             }
 
-            if (isItemInStock(ADDITIONAL_GEAR, item)) {
+            if (currentItem.getCode().equals(item.getCode()) && isItemInStock(ADDITIONAL_GEAR, item)) {
                 if (!diver.hasSpecificInventoryItem(item)) {
                     diver.addInventoryItem(item);
                 }
@@ -160,7 +161,7 @@ public class InventorySupplier {
         diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
     }
 
-    private void findComputer(Diver diver) {
+    private void findComputer(Diver diver, Item currentItem) {
         for (Item item : itemsArrayList) {
             if (isUsedAtNightAndAvailable(DIVING_COMPUTER, item)) {
                 if (!diver.hasSpecificInventoryItem(item)) {
@@ -169,7 +170,7 @@ public class InventorySupplier {
                 return;
             }
 
-            if (isItemInStock(DIVING_INSTRUMENTS, item)) {
+            if (currentItem.getCode().equals(item.getCode()) && isItemInStock(DIVING_INSTRUMENTS, item)) {
                 if (!diver.hasSpecificInventoryItem(item)) {
                     diver.addInventoryItem(item);
                 }
