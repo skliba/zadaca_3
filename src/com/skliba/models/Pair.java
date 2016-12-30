@@ -1,6 +1,6 @@
 package com.skliba.models;
 
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 
 public class Pair<FirstPerson, SecondPerson> {
 

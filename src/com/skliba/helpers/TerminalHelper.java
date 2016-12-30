@@ -4,7 +4,7 @@ import com.skliba.dpatterns.memento.TerminalCaretaker;
 import com.skliba.dpatterns.memento.TerminalOriginator;
 import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.dpatterns.singleton.TerminalData;
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 
 import java.util.ArrayList;
 import java.util.Scanner;

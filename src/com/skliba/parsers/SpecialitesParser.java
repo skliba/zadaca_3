@@ -2,7 +2,7 @@ package com.skliba.parsers;
 
 import com.skliba.SpecialDivingSkill;
 import com.skliba.dpatterns.singleton.DivingClub;
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 
 import java.util.ArrayList;
 

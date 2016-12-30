@@ -2,7 +2,7 @@ package com.skliba.algorithms;
 
 import com.skliba.helpers.ReportHelper;
 import com.skliba.dpatterns.singleton.Dive;
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.models.Divings;
 import com.skliba.models.Pair;
@@ -87,8 +87,6 @@ public class MaxPartnerAlgorithm implements Algorithm {
             Dive dive = Dive.getInstance();
             dive.setDiveDepth(diving.getDiveDepth());
             List<Diver> allDiversInADive = dive.getAllDiversTogether();
-            dive.setDiveDate(diving.getDiveDate());
-            dive.setDiveTime(diving.getDiveTime());
             Map<String, List<Diver>> certificateDiverMapCopy = (Map<String, List<Diver>>) ((HashMap) certificateDiverMap).clone();
             int numberOfAddedDivers = 0;
             if (diving.getNumberOfDivers() % 2 != 0) {

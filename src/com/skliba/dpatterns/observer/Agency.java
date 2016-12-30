@@ -2,7 +2,7 @@ package com.skliba.dpatterns.observer;
 
 import com.skliba.dpatterns.visitor.Visitable;
 import com.skliba.dpatterns.visitor.Visitor;
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 
 import java.util.ArrayList;
 

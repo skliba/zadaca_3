@@ -5,7 +5,7 @@ import com.skliba.dpatterns.composite.Item;
 import com.skliba.dpatterns.composite.ItemGroup;
 import com.skliba.dpatterns.singleton.Dive;
 import com.skliba.dpatterns.singleton.InventoryData;
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 
 import java.util.ArrayList;
 import java.util.List;

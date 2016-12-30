@@ -2,7 +2,7 @@ package com.skliba.algorithms;
 
 import com.skliba.dpatterns.singleton.Dive;
 import com.skliba.dpatterns.singleton.DivingClub;
-import com.skliba.dpatterns.visitor.Diver;
+import com.skliba.dpatterns.mvc.model.Diver;
 import com.skliba.helpers.ReportHelper;
 import com.skliba.models.*;
 
@@ -76,10 +76,8 @@ public class RandomAlgorithm implements Algorithm {
 
         for (Divings dive : startDivings) {
             for (Dive d : maxAllDivings) {
-                if (dive.getDiveDate().equals(d.getDiveDate()) && !dive.getDiveTime().equals(d.getDiveTime())) {
-                    generateDivers(dive.getNumberOfDivers(), dive.getDiveTime(),
-                            dive.getDiveDate(), d.getAllDiversTogether(), dive.getDiveDepth());
-                }
+                generateDivers(dive.getNumberOfDivers(), dive.getDiveTime(),
+                        dive.getDiveDate(), d.getAllDiversTogether(), dive.getDiveDepth());
             }
         }
         for (Dive dive : allDivings) {
@@ -115,12 +113,8 @@ public class RandomAlgorithm implements Algorithm {
             numberOfDivers = numberOfDivers - 3;
 
             diveWithDivers.setPairs(generatePairs(numberOfDivers, divers));
-            diveWithDivers.setDiveDate(diveDate);
-            diveWithDivers.setDiveTime(diveTime);
         } else {
             diveWithDivers.setPairs(generatePairs(numberOfDivers, divers));
-            diveWithDivers.setDiveDate(diveDate);
-            diveWithDivers.setDiveTime(diveTime);
         }
         diveWithDivers.setAllDiversTogether((ArrayList<Diver>) allDiversInADive.clone());
         diveWithDivers.setDiveDepth(diveDepth);
