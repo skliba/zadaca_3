@@ -11,4 +11,7 @@ public interface TerminalView {
     void addCommandLine(int numberOfRows);
 
     String getUserInputFromScanner();
+
+    void onNewStage();
+
 }

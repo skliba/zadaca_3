@@ -4,7 +4,7 @@ import com.skliba.dpatterns.mvc.view.TerminalView;
 import com.skliba.dpatterns.mvc.view.TerminalViewImpl;
 import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.dpatterns.mvc.model.Diver;
-import com.skliba.helpers.TerminalHelper;
+import com.skliba.listeners.StageListener;
 import com.skliba.parsers.Parser;
 import com.skliba.dpatterns.singleton.Dive;
 import com.skliba.dpatterns.singleton.TerminalData;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class Main {
+public class Main implements StageListener {
 
     private static final String FILE_REGEX = "^.*\\.(txt)";
 
@@ -29,11 +29,15 @@ public class Main {
             Main main = new Main();
             main.checkArguments(args);
             main.createInitialDiverList(DivingClub.getInstance().getDivers(), args);
-            TerminalView terminalView = new TerminalViewImpl();
-            terminalView.initView();
+            main.beginDrawing();
         } else {
             throw new IllegalArgumentException("Invalid number of arguments sent you've sent: " + args.length);
         }
+    }
+
+    private void beginDrawing() {
+        TerminalView terminalView = new TerminalViewImpl(this);
+        terminalView.initView();
     }
 
     private void createInitialDiverList(List<Diver> divers, String[] arguments) {
@@ -109,5 +113,10 @@ public class Main {
             throw new IllegalArgumentException("Invalid first argument passed, should be a filename that matches: '" + FILE_REGEX +
                     "' and you sent: '" + arg + "'");
         }
+    }
+
+    @Override
+    public void onNewPhasePressed() {
+
     }
 }

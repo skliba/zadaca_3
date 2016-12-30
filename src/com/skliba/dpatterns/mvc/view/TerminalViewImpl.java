@@ -2,6 +2,7 @@ package com.skliba.dpatterns.mvc.view;
 
 import com.skliba.dpatterns.factory.MVCFactory;
 import com.skliba.dpatterns.mvc.controller.TerminalController;
+import com.skliba.listeners.StageListener;
 
 import java.util.Scanner;
 
@@ -10,6 +11,12 @@ public class TerminalViewImpl implements TerminalView {
     private final String ANSI_ESC = "\033[";
 
     private TerminalController terminalController;
+
+    private StageListener stageListener;
+
+    public TerminalViewImpl(StageListener listener) {
+        this.stageListener = listener;
+    }
 
     @Override
     public void initView() {
@@ -41,5 +48,10 @@ public class TerminalViewImpl implements TerminalView {
     public String getUserInputFromScanner() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine().trim();
+    }
+
+    @Override
+    public void onNewStage() {
+        stageListener.onNewPhasePressed();
     }
 }

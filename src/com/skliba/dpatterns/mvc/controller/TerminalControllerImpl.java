@@ -130,13 +130,14 @@ public class TerminalControllerImpl implements TerminalController {
 
             } else if (command.equals("Q")) {
                 break;
+            } else if (command.equals("N")) {
+                view.onNewStage();
             } else {
 
                 //If deleting diver is triggered
                 for (Diver d : clonedDiverList) {
                     if (command.equals(d.getName())) {
                         deleteDiverFromList(d);
-                        resetCommandLine();
                         break;
                     }
                 }
@@ -149,7 +150,7 @@ public class TerminalControllerImpl implements TerminalController {
 
     private void deleteDiverFromList(Diver d) {
         view.clearScreen();
-       /* clonedDiverList.remove(d);
+        clonedDiverList.remove(d);
         currentlyVisibleDivers.remove(d);
         for (int i = 0; i < currentlyVisibleDivers.size(); i++) {
             if (i == numberOfTerminalRows) {
@@ -159,8 +160,15 @@ public class TerminalControllerImpl implements TerminalController {
                 view.printNames(numberOfTerminalRows - i, currentlyVisibleDivers.get(i).getName());
             }
         }
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         view.addCommandLine(numberOfRows);
-        initTerminal();*/
+        initTerminal();
     }
 
     private void resetCommandLine() {
