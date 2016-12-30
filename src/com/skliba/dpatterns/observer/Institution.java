@@ -5,7 +5,7 @@ import com.skliba.dpatterns.visitor.Diver;
 
 import java.util.ArrayList;
 
-public class Institution implements Observer {
+public class Institution {
 
     private String name;
 
@@ -29,12 +29,6 @@ public class Institution implements Observer {
 
     public float getAvgDepth() {
         return avgDepth;
-    }
-
-    @Override
-    public void update(Diver diver, int diveDepth) {
-        diversInAnInstitution.add(diver);
-        calculateAvgDepth(diveDepth);
     }
 
     private void calculateAvgDepth(int diveDepth) {
