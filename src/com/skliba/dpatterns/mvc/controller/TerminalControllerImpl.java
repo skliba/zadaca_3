@@ -59,7 +59,6 @@ public class TerminalControllerImpl implements TerminalController {
                 e.printStackTrace();
             }
         }
-
     }
 
     @Override
