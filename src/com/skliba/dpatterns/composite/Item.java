@@ -65,7 +65,7 @@ public class Item extends InventoryComponent {
 
     @Override
     public String toString() {
-        System.out.println(getName() + " " + getAllowedTemperature() + " " + getHood() + " ");
+        System.out.println(getName() + " " + getAllowedTemperature() + " ");
         return "";
     }
 

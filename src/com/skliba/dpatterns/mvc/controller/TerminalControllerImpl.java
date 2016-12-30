@@ -8,7 +8,6 @@ import com.skliba.dpatterns.singleton.DivingClub;
 import com.skliba.dpatterns.singleton.TerminalData;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,8 +36,6 @@ public class TerminalControllerImpl implements TerminalController {
     private int numOfSavedStates = 0;
 
     private TerminalView view;
-
-    private List<Object> buffer = new ArrayList<>();
 
     public TerminalControllerImpl(TerminalView view) {
         this.view = view;

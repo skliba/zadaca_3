@@ -2,7 +2,7 @@ package com.skliba.dpatterns.mvc.view;
 
 import com.skliba.dpatterns.mvc.model.Diver;
 
-public interface TerminalView {
+public interface TerminalGearView {
 
     void initView();
 
@@ -10,11 +10,13 @@ public interface TerminalView {
 
     void printNames(int yCoordinate, String name);
 
-    void printNames(int yCoordinate, Diver name);
+    int printNames(int yCoordinate, Diver name);
 
     void addCommandLine(int numberOfRows);
 
     String getUserInputFromScanner();
 
-    void onNewStage();
+    void onPreviousStage();
+
+    void onGearAddedToDivers();
 }
