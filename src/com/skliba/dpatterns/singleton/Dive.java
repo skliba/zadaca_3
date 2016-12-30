@@ -16,6 +16,7 @@ public class Dive {
     private int waterTemperature;
     private boolean isNightDive;
     private int numberOfRecorders;
+    private boolean drySuitDive = false;
 
     private Dive() {
     }
@@ -67,6 +68,7 @@ public class Dive {
             if (nightTime == 0) this.isNightDive = false;
             if (nightTime == 1) this.isNightDive = true;
         }
+        if (waterTemperature < 15) drySuitDive = true;
         this.numberOfRecorders = numberOfRecorders;
     }
 
@@ -80,5 +82,9 @@ public class Dive {
 
     public int getNumberOfRecorders() {
         return numberOfRecorders;
+    }
+
+    public boolean isDrySuitDive() {
+        return drySuitDive;
     }
 }

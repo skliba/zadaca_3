@@ -19,7 +19,8 @@ public class Main {
     private static final String FILE_REGEX = "^.*\\.(txt)";
 
     private static final int REQUIRED_ARGS_NUMBER = 10;
-    private static final int TEMPERATURE_LIMIT_FOR_DRY_SUIT = 15;
+
+    private static final int TEMPERATURE_LIMIT_FOR_DRY_SUIT = 10;
 
     public static void main(String[] args) {
         if (args != null && args.length != 0 && args.length == REQUIRED_ARGS_NUMBER) {
