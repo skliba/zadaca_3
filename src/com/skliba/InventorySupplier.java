@@ -12,18 +12,25 @@ import java.util.List;
 
 public class InventorySupplier {
 
-    public static final String WET_SUIT_KEY = "1.1.1";
-    public static final String HALF_WET_SUIT_KEY = "1.1.2";
-    public static final String SUIT_KEY = "1.1";
-    public static final String DRY_SUIT_KEY = "1.1.3";
-    public static final String UNDERSUIT_KEY = "1.2";
-    public static final String HOOD_KEY = "1.4";
-    public static final String GLOVES_KEY = "1.3";
-    public static final String BOOTS_KEY = "1.5";
-    public static final String REGULATOR_KEY = "2.1";
-    public static final String UNDERWATER_BOTTLE = "2.2";
-    private boolean requiresHood = false;
-    private boolean requiresUnderSuit = false;
+    private static final String WET_SUIT_KEY = "1.1.1";
+    private static final String HALF_WET_SUIT_KEY = "1.1.2";
+    private static final String SUIT_KEY = "1.1";
+    private static final String DRY_SUIT_KEY = "1.1.3";
+    private static final String UNDERSUIT_KEY = "1.2";
+    private static final String HOOD_KEY = "1.4";
+    private static final String GLOVES_KEY = "1.3";
+    private static final String BOOTS_KEY = "1.5";
+    private static final String REGULATOR_KEY = "2.1";
+    private static final String UNDERWATER_BOTTLE = "2.2";
+    private static final String DIVING_INSTRUMENTS = "4";
+    private static final String ADDITIONAL_GEAR = "5";
+    private static final String PHOTO_VIDEO_CAMERA = "6.1";
+    private static final String UNDERWATER_LIGHT = "6.2";
+    private static final String NIGHT_LIGHT_KEY = "5.1";
+    private static final String DIVING_COMPUTER = "4.1";
+    private static final String BCD = "3.1";
+    private static final String IRON_BELT = "3.2";
+
     private boolean suitAlreadyFound = false;
 
     private List<Item> itemsArrayList = new ArrayList<>();
@@ -39,6 +46,7 @@ public class InventorySupplier {
             }
             findItems(diver, itemGroup.getComponents());
         }
+
     }
 
     private void fillArrayListWithItems(ArrayList<InventoryComponent> itemGroup) {
@@ -52,17 +60,9 @@ public class InventorySupplier {
     }
 
     private void findItems(Diver diver, List<InventoryComponent> inventoryComponents) {
-        boolean isMinimalEquipmentSupplied = false;
         for (InventoryComponent inventoryComponent : inventoryComponents) {
             if (inventoryComponent instanceof Item) {
-                if (supplyDiverWithItem(diver, (Item) inventoryComponent)) {
-                    isMinimalEquipmentSupplied = true;
-                    if (diver.isMinimalGear()) {
-                        break;
-                    }
-                    diver.removeExtraInventoryItem();
-                    break;
-                }
+                supplyDiverWithItem(diver, (Item) inventoryComponent);
             } else {
                 findItems(diver, ((ItemGroup) inventoryComponents).getComponents());
             }
@@ -70,10 +70,7 @@ public class InventorySupplier {
 
     }
 
-    private boolean supplyDiverWithItem(Diver diver, Item item) {
-        boolean isNightDive = Dive.getInstance().isNightDive();
-        int waterTemperature = Dive.getInstance().getWaterTemperature();
-        int numberOfRecorders = Dive.getInstance().getNumberOfRecorders();
+    private void supplyDiverWithItem(Diver diver, Item item) {
 
         if (item.getCode().startsWith(SUIT_KEY)) {
 
@@ -103,28 +100,76 @@ public class InventorySupplier {
             findRegulator(diver);
         } else if (item.getCode().startsWith(UNDERWATER_BOTTLE)) {
             findBottle(diver);
+        } else if (item.getCode().startsWith(BCD)) {
+            findBcd(diver);
+        } else if (item.getCode().startsWith(IRON_BELT)) {
+            findIronBelt(diver);
+        } else if (item.getCode().startsWith(DIVING_INSTRUMENTS)) {
+            findComputer(diver);
+        } else if (item.getCode().startsWith(ADDITIONAL_GEAR)) {
+            findAdditionalGear(diver);
+        } else if (item.getCode().startsWith(PHOTO_VIDEO_CAMERA)) {
+            findCamera(diver);
+        } else if (item.getCode().startsWith(UNDERWATER_LIGHT)) {
+            findLight(diver);
         }
 
-        if (!item.getAllowedTemperature().equals("#") && Integer.parseInt(item.getAllowedTemperature()) > waterTemperature) {
-            return false;
-        }
+    }
 
-        if (item.getHood().equals("+")) {
-            requiresHood = true;
+    private void findLight(Diver diver) {
+        for (Item item : itemsArrayList) {
+            if (isItemAvailableAndIsForRecording(UNDERWATER_LIGHT, item)) {
+                //TODO decrement number of items in stock
+                diver.addInventoryItem(item);
+                return;
+            }
         }
+        diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
+    }
 
-        if (isNightDive && !item.getNightSuit().equals("*")) {
-            return false;
+    private void findCamera(Diver diver) {
+        for (Item item : itemsArrayList) {
+            if (isItemAvailableAndIsForRecording(PHOTO_VIDEO_CAMERA, item)) {
+                //TODO decrement number of items in stock
+                diver.addInventoryItem(item);
+                return;
+            }
         }
+        diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
+    }
 
-        if (item.getUnderSuit().equals("+")) {
-            requiresUnderSuit = true;
+    private void findAdditionalGear(Diver diver) {
+        for (Item item : itemsArrayList) {
+            if (isUsedAtNightAndAvailable(NIGHT_LIGHT_KEY, item)) {
+                //TODO decrement number of items in stock
+                diver.addInventoryItem(item);
+                return;
+            }
+
+            if (isItemInStock(ADDITIONAL_GEAR, item)) {
+                //TODO decrement number of items in stock
+                diver.addInventoryItem(item);
+                return;
+            }
         }
+        diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
+    }
 
-        if (numberOfRecorders > 0 && !item.recording().equals("*")) {
-            return false;
+    private void findComputer(Diver diver) {
+        for (Item item : itemsArrayList) {
+            if (isUsedAtNightAndAvailable(DIVING_COMPUTER, item)) {
+                //TODO decrement number of items in stock
+                diver.addInventoryItem(item);
+                return;
+            }
+
+            if (isItemInStock(DIVING_INSTRUMENTS, item)) {
+                //TODO decrement number of items in stock
+                diver.addInventoryItem(item);
+                return;
+            }
         }
-
+        diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
     }
 
     private void findBottle(Diver diver) {
@@ -137,6 +182,29 @@ public class InventorySupplier {
         }
         diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
     }
+
+    private void findIronBelt(Diver diver) {
+        for (Item item : itemsArrayList) {
+            if (isItemInStock(IRON_BELT, item)) {
+                //TODO decrement number of items in stock
+                diver.addInventoryItem(item);
+                return;
+            }
+        }
+        diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
+    }
+
+    private void findBcd(Diver diver) {
+        for (Item item : itemsArrayList) {
+            if (isItemInStock(BCD, item)) {
+                //TODO decrement number of items in stock
+                diver.addInventoryItem(item);
+                return;
+            }
+        }
+        diver.setDiverInventoryLevel(DiverInventoryLevel.NOT_EQUIPPED);
+    }
+
 
     private void findRegulator(Diver diver) {
         for (Item item : itemsArrayList) {
@@ -240,5 +308,17 @@ public class InventorySupplier {
 
     private boolean isItemInStock(String key, Item item) {
         return item.getCode().startsWith(key) && item.getNumberOfItems() > 0;
+    }
+
+    private boolean isItemAvailableAndIsForRecording(String key, Item item) {
+        if (item.getCode().startsWith(key) && item.getNumberOfItems() > 0 && Dive.getInstance().getNumberOfRecorders() > 0) {
+            //TODO decrement number of recorders
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isUsedAtNightAndAvailable(String key, Item item) {
+        return item.getCode().equals(key) && item.getNumberOfItems() > 0 && Dive.getInstance().isNightDive();
     }
 }

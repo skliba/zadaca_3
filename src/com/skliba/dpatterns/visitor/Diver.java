@@ -434,7 +434,4 @@ public class Diver implements Visitable, Cloneable {
         this.minimalGear = minimalGear;
     }
 
-    public void removeExtraInventoryItem() {
-        inventoryItems.remove(inventoryItems.size() - 2);
-    }
 }
