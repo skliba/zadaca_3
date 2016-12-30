@@ -26,7 +26,8 @@ public class TerminalGearViewImpl implements TerminalGearView {
 
     @Override
     public void printNames(int yCoordinate, String name) {
-
+        System.out.print(ANSI_ESC + yCoordinate + ";1f");
+        System.out.print(name);
     }
 
     @Override
